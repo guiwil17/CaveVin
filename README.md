@@ -1,2 +1,2 @@
 # CaveVin
-Outils de gestion de la cave à vin
+Outils de gestion de ses caves à vin
