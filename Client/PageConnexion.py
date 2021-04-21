@@ -5,6 +5,7 @@ import socket
 import json
 
 import PageInscription
+import PageAccueil
 
 class PageConnexion(tk.Frame):
     def __init__(self, parent, controller):
@@ -29,7 +30,11 @@ class PageConnexion(tk.Frame):
             r = r.decode("utf-8")
             data = json.loads(r)
 
-            print(data)
+            if(data["status"] == 200 and data["valeurs"]):
+                controller.show_frame(PageAccueil.PageAccueil)
+                print("ici")
+
+
 
         tk.Frame.__init__(self, parent)
         can = tk.Canvas(self, width=600, height=400)
