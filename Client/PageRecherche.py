@@ -1,11 +1,8 @@
 import tkinter.filedialog
 import tkinter as tk
 
-import PageAjouterCave
-import PageAjouterVin
 import PageAccueil
-import PageConnexion
-import PageInscription
+
 
 class PageRecherche(tk.Frame):
     def __init__(self, parent, controller):

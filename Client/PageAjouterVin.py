@@ -1,6 +1,9 @@
 import tkinter.filedialog
 import tkinter as tk
 
+import PageAccueil
+
+
 class PageAjouterVin(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -14,7 +17,7 @@ class PageAjouterVin(tk.Frame):
         can.create_text(300, 40, text="Ajouter un Vin", font=("Montserrat", 22, "bold"), fill="white")
 
         self.imgHome = tk.PhotoImage(file="img/home.png")
-        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil))
+        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
         buttonHome.place(x=5,y=5)
 
         def choisir_photo(event=None):

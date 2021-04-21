@@ -1,6 +1,8 @@
 import tkinter.filedialog
 import tkinter as tk
 
+import PageAccueil
+
 class PageAjouterCave(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -10,6 +12,9 @@ class PageAjouterCave(tk.Frame):
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
 
+        self.imgHome = tk.PhotoImage(file="img/home.png")
+        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
+        buttonHome.place(x=5, y=5)
 
         can.create_text(300, 60, text="Ajouter une Cave", font=("Montserrat", 22, "bold"), fill="white")
 
