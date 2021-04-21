@@ -12,9 +12,6 @@ class PageConnexion(tk.Frame):
         def connexion(event=None):
             entryUser = self.entryUser.get()
             password = self.entryPass.get()
-            print("ici")
-            print(entryUser)
-            print(password)
             password_hash = hashlib.sha256(password.encode()).hexdigest()
 
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
