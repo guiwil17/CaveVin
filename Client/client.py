@@ -10,6 +10,7 @@ class main(tk.Tk):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
+
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
@@ -184,3 +185,4 @@ app.mainloop()
 
 if __name__ == '__main__':
     main()
+
