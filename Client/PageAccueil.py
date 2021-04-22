@@ -6,6 +6,7 @@ import PageAjouterVin
 import PageRecherche
 import PageConnexion
 import PageInscription
+import MesCaves
 
 class PageAccueil(tk.Frame):
     def __init__(self, parent, controller):
@@ -19,7 +20,7 @@ class PageAccueil(tk.Frame):
         can.create_text(300, 80, text="Accueil", font=("Montserrat", 32, "bold"), fill="white")
 
         button1 = tk.Button(can, text="Mes Caves", padx=59, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44",
-                         fg="white")
+                         fg="white", command=lambda: controller.show_frame(MesCaves.MesCaves))
         button1.place(x=50, y=200)
         button2 = tk.Button(can, text="Visiter des Caves", padx=30, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44",
                          fg="white", command=lambda: controller.show_frame(PageRecherche.PageRecherche))
