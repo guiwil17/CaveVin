@@ -48,15 +48,16 @@ CREATE TABLE Vin(
 
 CREATE TABLE Echange(
    Id_Echange INT AUTO_INCREMENT,
-   Id_Vin INT NOT NULL,
-   Id_Vin_1 INT NOT NULL,
-   Id_Personne INT NOT NULL,
-   Id_Personne_1 INT NOT NULL,
+   accept boolean,
+   Id_Vin_Recepteur INT NOT NULL,
+   Id_Vin_Emmetteur INT NOT NULL,
+   Id_Emmetteur INT NOT NULL,
+   Id_Recepteur INT NOT NULL,
    PRIMARY KEY(Id_Echange),
-   FOREIGN KEY(Id_Vin) REFERENCES Vin(Id_Vin),
-   FOREIGN KEY(Id_Vin_1) REFERENCES Vin(Id_Vin),
-   FOREIGN KEY(Id_Personne) REFERENCES Utilisateur(Id_Personne),
-   FOREIGN KEY(Id_Personne_1) REFERENCES Utilisateur(Id_Personne)
+   FOREIGN KEY(Id_Vin_Recepteur) REFERENCES Vin(Id_Vin),
+   FOREIGN KEY(Id_Vin_Emmetteur) REFERENCES Vin(Id_Vin),
+   FOREIGN KEY(Id_Emmetteur) REFERENCES Utilisateur(Id_Personne),
+   FOREIGN KEY(Id_Recepteur) REFERENCES Utilisateur(Id_Personne)
 );
 
 START TRANSACTION;
