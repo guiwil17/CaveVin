@@ -26,8 +26,8 @@ class MesCaves(tk.Frame):
             if (data["status"] == 200 and data["valeurs"]):
                return data["valeurs"]
 
-        data = recupVins()
-        print(data)
+       # data = recupVins()
+       # print(data)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/vigne2.jpg")
@@ -99,12 +99,6 @@ class MesCaves(tk.Frame):
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
 
 
 
