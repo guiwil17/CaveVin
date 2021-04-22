@@ -3,6 +3,7 @@ import tkinter as tk
 import hashlib
 import socket
 import json
+from PIL import Image, ImageTk
 
 import PageConnexion
 
@@ -37,8 +38,8 @@ class PageInscription(tk.Frame):
 
 
         tk.Frame.__init__(self, parent)
-        can = tk.Canvas(self, width=600, height=400)
-        self.img = tk.PhotoImage(file="img/singin.png")
+        can = tk.Canvas(self, width=1200, height=800)
+        self.img = ImageTk.PhotoImage(file="img/signin.jpg")
         can.create_image(0, 0, anchor="nw", image=self.img)
         can.place(x=0, y=0)
         fonts = ("Time New Roman", 15, "bold")
