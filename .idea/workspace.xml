@@ -4,7 +4,6 @@
     <list default="true" id="f3ffa49e-1048-4147-974e-58bbf12e1b86" name="Default Changelist" comment="Suppression pages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/PageConnexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageConnexion.py" afterDir="false" />
-
       <change beforePath="$PROJECT_DIR$/Client/PageInscription.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageInscription.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client.py" afterDir="false" />
     </list>
@@ -104,8 +103,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.client" />
-      <item itemvalue="Python.test_hashlib" />
       <item itemvalue="Python.server" />
+      <item itemvalue="Python.test_hashlib" />
     </list>
     <recent_temporary>
       <list>
