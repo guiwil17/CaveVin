@@ -7,7 +7,7 @@ import PageRecherche
 import PageAccueil
 import PageConnexion
 import PageInscription
-
+import MesCaves
 LARGE_FONT= ("Verdana", 12)
 
 class main(tk.Tk):
@@ -23,21 +23,21 @@ class main(tk.Tk):
 
         self.frames = {}
 
-        for F in (PageAccueil.PageAccueil, PageRecherche.PageRecherche,PageAjouterVin.PageAjouterVin, PageAjouterCave.PageAjouterCave, PageInscription.PageInscription, PageConnexion.PageConnexion):
+        for F in (PageAccueil.PageAccueil, PageRecherche.PageRecherche,PageAjouterVin.PageAjouterVin, PageAjouterCave.PageAjouterCave, PageInscription.PageInscription, PageConnexion.PageConnexion, MesCaves.MesCaves):
             frame = F(container, self)
 
             self.frames[F] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(PageInscription.PageInscription)
+        self.show_frame(PageConnexion.PageConnexion)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
 app = main()
-app.geometry("600x400")
+app.geometry("1200x800")
 app.iconbitmap("img/logo.ico")
 app.resizable(width=False, height=False)
 app.title("MyWine")
