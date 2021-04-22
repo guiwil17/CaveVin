@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS MyWine;
 CREATE DATABASE MyWine;
 
 USE MyWine;
@@ -42,6 +43,7 @@ CREATE TABLE Vin(
    Année INT,
    Quantité INT,
    Id_Cave INT NOT NULL,
+   Image BLOB,
    PRIMARY KEY(Id_Vin),
    FOREIGN KEY(Id_Cave) REFERENCES Cave(Id_Cave)
 );
@@ -53,6 +55,8 @@ CREATE TABLE Echange(
    Id_Vin_Emmetteur INT NOT NULL,
    Id_Emmetteur INT NOT NULL,
    Id_Recepteur INT NOT NULL,
+   Date_demande DATE NOT NULL,
+   Date_reponse DATE,
    PRIMARY KEY(Id_Echange),
    FOREIGN KEY(Id_Vin_Recepteur) REFERENCES Vin(Id_Vin),
    FOREIGN KEY(Id_Vin_Emmetteur) REFERENCES Vin(Id_Vin),
@@ -79,12 +83,12 @@ INSERT INTO Cave Values(null, "Maison Principale", 3);
 
 
 
-INSERT INTO Vin VALUES(null, 'Château Mouton Rothschild Pauillac', 'Bordeaux Rouge amer', 'très bon, assez amer', FALSE, 2002, 5, 1);
-INSERT INTO Vin VALUES(null, 'Château Lafite Rothschild Pauillac', 'Bordeaux Rouge sucré', 'bon vin de table', FALSE, 2012, 1, 1);
-INSERT INTO Vin VALUES(null, 'Château Margaux', 'Bordeaux Rouge amer', 'moyen, trop amer', FALSE, 2005, 12, 1);
-INSERT INTO Vin VALUES(null, 'Château Haut-Brion Pessac-Léognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchoné', FALSE, 2005, 3, 2);
-INSERT INTO Vin VALUES(null, 'Château Haut-Brion Pessac-Léognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchoné', FALSE, 2005, 6, 1);
-INSERT INTO Vin VALUES(null, 'Beauséjour (Duffau Lagarosse), Saint Emilion', 'Bordeaux Rouge', '18/20', FALSE, 2002, 2, 3);
-INSERT INTO Vin VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', '16/20', TRUE, 2012, 8, 3);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Château Mouton Rothschild Pauillac', 'Bordeaux Rouge amer', 'très bon, assez amer', FALSE, 2002, 5, 1);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Château Lafite Rothschild Pauillac', 'Bordeaux Rouge sucré', 'bon vin de table', FALSE, 2012, 1, 1);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Château Margaux', 'Bordeaux Rouge amer', 'moyen, trop amer', FALSE, 2005, 12, 1);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Château Haut-Brion Pessac-Léognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchoné', FALSE, 2005, 3, 2);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Château Haut-Brion Pessac-Léognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchoné', FALSE, 2005, 6, 1);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Beauséjour (Duffau Lagarosse), Saint Emilion', 'Bordeaux Rouge', '18/20', FALSE, 2002, 2, 3);
+INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', '16/20', TRUE, 2012, 8, 3);
 
 COMMIT;

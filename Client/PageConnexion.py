@@ -3,6 +3,7 @@ import tkinter as tk
 import hashlib
 import socket
 import json
+from PIL import Image, ImageTk
 
 import PageInscription
 import PageAccueil
@@ -34,8 +35,8 @@ class PageConnexion(tk.Frame):
 
 
         tk.Frame.__init__(self, parent)
-        can = tk.Canvas(self, width=600, height=400)
-        self.img = tk.PhotoImage(file="img/login.png")
+        can = tk.Canvas(self, width=1200, height=800)
+        self.img = ImageTk.PhotoImage(file="img/login.jpg")
         can.create_image(0, 0, anchor="nw", image=self.img)
         can.place(x=0, y=0)
         titre = ("Time New Roman", 20, "bold")

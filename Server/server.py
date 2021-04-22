@@ -33,6 +33,9 @@ class ClientThread(threading.Thread):
         for (name) in cursor:
             self.retour = {"status": 200, "valeurs": True}
             print(name)
+        mydb.close()
+        cursor.close()
+
 
     def create_account(self, nom, prenom, pseudo, telephone, password):
 
@@ -57,7 +60,90 @@ class ClientThread(threading.Thread):
             print("SQLSTATE", err.sqlstate)
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg }
+        mydb.close()
+        cursor.close()
 
+
+    def create_cave(self, label, Id_Personne):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("INSERT INTO Cave VALUES(null, %s, %s)")
+
+        try:
+            cursor.execute(query, (label, Id_Personne))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg }
+        mydb.close()
+        cursor.close()
+
+
+    def get_caves(self, id_utilisateur):
+
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("SELECT label FROM Cave WHERE id_Personne = %s;")
+
+        try:
+            tab = []
+            cursor.execute(query, (id_utilisateur,))
+            for (label) in cursor:
+                 tab.append(label[0])
+            self.retour = {"status": 200, "valeurs": tab}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+
+    def get_vins(self, id_utilisateur):
+
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
+
+        try:
+            tab = []
+            cursor.execute(query, (id_utilisateur,))
+            for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+                 tab.append(
+                     {"Nom": Nom, "Type": Type,"Notation": Notation, "Echangeable": Echangeable, "Année": Année, "Quantité": Quantité, "Image": Image, "label": label})
+            self.retour = {"status": 200, "valeurs": tab}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
 
     def run(self):
 
@@ -74,6 +160,12 @@ class ClientThread(threading.Thread):
             self.login(test['paramètres'][0], test['paramètres'][1])
         elif(test['fonction'] == "create_account"):
             self.create_account(test['paramètres'][0], test['paramètres'][1],test['paramètres'][2],test['paramètres'][3],test['paramètres'][4])
+        elif (test['fonction'] == "get_vins"):
+            self.get_vins(test['paramètres'][0])
+        elif (test['fonction'] == "create_cave"):
+            self.create_cave(test['paramètres'][0], test['paramètres'][1])
+        elif (test['fonction'] == "get_caves"):
+            self.get_caves(test['paramètres'][0])
 
         #for v in r :
          #   print(v)
