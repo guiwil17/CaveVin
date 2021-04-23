@@ -44,19 +44,19 @@ class PageConnexion(tk.Frame, Pages.Pages):
         fonts = ("Time New Roman", 18, "bold")
         fonts2 = ("Time New Roman", 16)
 
-        can.create_text(330, 100, text="Connexion", font=titre)
-        can.create_text(180, 285, text="Pseudo", font=fonts)
-        can.create_text(150, 335, text="Mot de passe", font=fonts)
+        can.create_text(500, 100, text="Connexion", font=titre)
+        can.create_text(300, 285, text="Pseudo", font=fonts)
+        can.create_text(270, 335, text="Mot de passe", font=fonts)
 
         self.entryUser = tk.Entry(can, font=fonts, fg="black", justify="center")
-        self.entryUser.place(x=320, y=270)
+        self.entryUser.place(x=370, y=270)
 
         self.entryPass = tk.Entry(can, font=fonts, fg="black", show="*", justify="center")
-        self.entryPass.place(x=320, y=320)
+        self.entryPass.place(x=370, y=320)
 
         buttonValid = tk.Button(can, text="Se connecter", padx=50, font=fonts, pady=0, bg="#AC1E44", fg="white", command=connexion)
-        buttonValid.place(x=210, y=400)
+        buttonValid.place(x=370, y=400)
 
         buttonCreer = tk.Button(can, text="Créer un compte", font=fonts2, pady=0, bg="#AC1E44",
                                  fg="white", command=lambda: controller.show_frame(PageInscription.PageInscription))
-        buttonCreer.place(x=265, y=480)
+        buttonCreer.place(x=420, y=480)
