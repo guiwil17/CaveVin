@@ -5,6 +5,7 @@ import threading
 import mysql.connector
 import mysql.connector
 import json
+import ast
 
 class ClientThread(threading.Thread):
 
@@ -26,20 +27,16 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Nom FROM personne WHERE Pseudo = %s AND Password = %s ")
+        query = ("SELECT Id_Personne FROM personne WHERE Pseudo = %s AND Password = %s ")
         cursor.execute(query, (pseudo, password))
 
 
-        for (name) in cursor:
-            self.retour = {"status": 200, "valeurs": True}
-            print(name)
-        mydb.close()
-        cursor.close()
+        for (Id_Personne) in cursor:
+            self.retour = {"status": 200, "valeurs": Id_Personne[0]}
 
 
     def create_account(self, nom, prenom, pseudo, telephone, password):
 
-        print(pseudo)
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -60,9 +57,6 @@ class ClientThread(threading.Thread):
             print("SQLSTATE", err.sqlstate)
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg }
-        mydb.close()
-        cursor.close()
-
 
     def create_cave(self, label, Id_Personne):
         mydb = mysql.connector.connect(
@@ -145,17 +139,53 @@ class ClientThread(threading.Thread):
         mydb.close()
         cursor.close()
 
+    def ajouter_vin(self, nom, annee, type, cave, commentaire, image):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("INSERT INTO Vin (Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave, Image) VALUES(null, %s, %s, %s, %s, %s, %s, %s, %s)")
+
+        try:
+            cursor.execute(query, (nom, type, commentaire, False, 2010,  10,5,  image))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+
     def run(self):
 
         print("Connexion de %s %s" % (self.ip, self.port,))
+        r = ""
+        while 1:
+            message = self.clientsocket.recv(10000000000)
+            message = message.decode("utf-8")
 
-        r = self.clientsocket.recv(2048)
+            #test = json.loads(r)
+            r = r + message
+            if "}" in message:
+                break
 
-        r = r.decode("utf-8")
-
+        print(r)
 
         test = json.loads(r)
-        print(test['fonction'])
+
+        print(test)
+
+
+
+
+
+
         if(test['fonction'] == "login"):
             self.login(test['paramètres'][0], test['paramètres'][1])
         elif(test['fonction'] == "create_account"):
@@ -166,7 +196,9 @@ class ClientThread(threading.Thread):
             self.create_cave(test['paramètres'][0], test['paramètres'][1])
         elif (test['fonction'] == "get_caves"):
             self.get_caves(test['paramètres'][0])
-
+        elif(test['fonction'] == "ajouter_vin"):
+            print("la")
+            self.ajouter_vin(test['paramètres'][0], test['paramètres'][1],test['paramètres'][2],test['paramètres'][3],test['paramètres'][4],test['paramètres'][5])
         #for v in r :
          #   print(v)
 

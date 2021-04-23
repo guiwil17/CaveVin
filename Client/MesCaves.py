@@ -26,8 +26,8 @@ class MesCaves(tk.Frame):
             if (data["status"] == 200 and data["valeurs"]):
                return data["valeurs"]
 
-        data = recupVins()
-        print(data)
+       # data = recupVins()
+        #print(data)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/vigne2.jpg")
@@ -49,10 +49,10 @@ class MesCaves(tk.Frame):
         buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame(PageAccueil.PageAccueil))
         buttonMailSend.place(x=1100, y=5)
 
-
+        titre = ("Time New Roman", 15, "bold")
         #Filtre
-
-        filtreNom = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
+        can.create_text(70, 160, text="Filtre", font=titre, fill="white")
+        filtreNom = tk.Entry(can, font=("Montserrat", 12, "bold"), width=13, bg="white", fg="black", justify="center")
         filtreNom.place(x=140, y=150)
 
         filtreType = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
@@ -61,15 +61,12 @@ class MesCaves(tk.Frame):
         filtreAnnee = tk.Entry(can, font=("Montserrat", 12, "bold"), width=7, bg="white", fg="black", justify="center")
         filtreAnnee.place(x=520, y=150)
 
-        filtreCommentaire = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
-        filtreCommentaire.place(x=650, y=150)
-
-        filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
-        filtreCave.place(x=800, y=150)
+        filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"), width=9, bg="white", fg="black", justify="center")
+        filtreCave.place(x=620, y=150)
 
         #Tableau
 
-        tableau = Treeview(can, columns=('','Nom', 'Type', 'Année', 'Commentaire', 'Cave', 'Quantité', 'Echangeable'))
+        tableau = Treeview(can, columns=('','Nom', 'Type', 'Année', 'Cave', 'Commentaire', 'Quantité', 'Echangeable'))
         tableau.pack(padx=10, pady=180)
 
         vsb = Scrollbar(can, orient="vertical", command=tableau.yview)
@@ -99,12 +96,7 @@ class MesCaves(tk.Frame):
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in data :
-            tableau.insert('', 'end', values=( d["Image"],d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+
 
 
 
