@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3ffa49e-1048-4147-974e-58bbf12e1b86" name="Default Changelist" comment="Clients en plusieurs pages">
+    <list default="true" id="f3ffa49e-1048-4147-974e-58bbf12e1b86" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Client/Pages.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageInscription.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageInscription.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/MesCaves.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/MesCaves.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/PageAccueil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAccueil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/PageAjouterCave.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterCave.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/PageAjouterVin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterVin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/PageConnexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageConnexion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/PageRecherche.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageRecherche.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Guillaume" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.client">
     <configuration name="MesCaves" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Mywine" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -155,10 +159,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.Test" />
         <item itemvalue="Python.MesCaves" />
+        <item itemvalue="Python.server" />
         <item itemvalue="Python.test_hashlib" />
       </list>
     </recent_temporary>
@@ -222,83 +226,5 @@
     <MESSAGE value="Changement des images" />
     <MESSAGE value="merge" />
     <option name="LAST_COMMIT_MESSAGE" value="merge" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619017089511">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619017089511" />
-    <state x="709" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1619075355364">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="709" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619075355364" />
-    <state x="587" y="88" key="CommitChangelistDialog2" timestamp="1619097022209">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="587" y="88" key="CommitChangelistDialog2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619097022209" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1619017022244">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619017022244" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1619093178338">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619093178338" />
-    <state width="1899" height="309" key="GridCell.Tab.0.bottom" timestamp="1619169997594">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="309" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619169997594" />
-    <state width="949" height="165" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096869368" />
-    <state width="1899" height="309" key="GridCell.Tab.0.center" timestamp="1619169997593">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="309" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619169997593" />
-    <state width="949" height="165" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096869368" />
-    <state width="1899" height="309" key="GridCell.Tab.0.left" timestamp="1619169997593">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="309" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619169997593" />
-    <state width="949" height="165" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096869368" />
-    <state width="1899" height="309" key="GridCell.Tab.0.right" timestamp="1619169997593">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="309" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619169997593" />
-    <state width="949" height="165" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096869368" />
-    <state x="184" y="86" key="MergeDialog" timestamp="1619096780344">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="184" y="86" key="MergeDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096780344" />
-    <state x="598" y="281" key="MultipleFileMergeDialog" timestamp="1619097038676">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="598" y="281" key="MultipleFileMergeDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619097038676" />
-    <state x="747" y="236" key="VCS.ChangeListViewerDialog" timestamp="1619096722299">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="747" y="236" key="VCS.ChangeListViewerDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096722299" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1619097055504">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619097055504" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1619097046185">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619097046185" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1619017524712">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619017524712" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1619017022245">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619017022245" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1619096717525">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619096717525" />
-    <state x="740" y="233" key="git4idea.branch.GitSmartOperationDialog" timestamp="1619097349233">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="233" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619097349233" />
   </component>
 </project>

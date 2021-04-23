@@ -1,10 +1,9 @@
 import tkinter.filedialog
 import tkinter as tk
-from PIL import Image, ImageTk, Image
-import socket
-import json
+from PIL import Image, ImageTk
+
 import PageAccueil
-import base64
+
 
 class PageAjouterVin(tk.Frame):
     def __init__(self, parent, controller):
@@ -65,37 +64,4 @@ class PageAjouterVin(tk.Frame):
 
         buttonRecherche = tk.Button(can, text="Rechercher", padx=23, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44",
                                  fg="white")
-        buttonRecherche.place(x=250, y=350)
-
-        def ajouter_vin():
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("93.7.175.167", 1111))
-            with open("img/cave.jpg", "rb") as img_file:
-                my_string = base64.b64encode(img_file.read())
-
-            my_string = my_string.decode('utf-8')
-
-            print(entryNom)
-            print(entryAnnee)
-            print(entryType)
-            print(variable.get())
-            print(entryCommentaire)
-
-            m = {"fonction": "ajouter_vin", "paramètres": [entryNom.get(),entryAnnee.get(),entryType.get(),variable.get(),entryCommentaire.get(),my_string]}
-            data = json.dumps(m)
-            print(data)
-            #data = json.loads(my_string)
-
-            s.sendall(bytes(data, encoding="utf-8"))
-            # envoi de l'image
-
-            r = s.recv(9999999)
-            r = r.decode("utf-8")
-            data = json.loads(r)
-
-            if (data["status"] == 200 and data["valeurs"]):
-                controller.show_frame(PageAccueil.PageAccueil)
-                print("ici")          
-
-        buttonRecherche = tk.Button(can, text="Ajouter", padx=23, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44", fg="white", command=ajouter_vin)
         buttonRecherche.place(x=250, y=350)

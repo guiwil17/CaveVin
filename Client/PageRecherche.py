@@ -1,12 +1,13 @@
 import tkinter.filedialog
 import tkinter as tk
 from PIL import Image, ImageTk
-
+import Pages
 import PageAccueil
 
 
-class PageRecherche(tk.Frame):
+class PageRecherche(tk.Frame, Pages.Pages):
     def __init__(self, parent, controller):
+
         tk.Frame.__init__(self, parent)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)

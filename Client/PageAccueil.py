@@ -7,12 +7,13 @@ import PageRecherche
 import PageConnexion
 import PageInscription
 import MesCaves
+import Pages
 from PIL import Image, ImageTk
 
-class PageAccueil(tk.Frame):
+class PageAccueil(tk.Frame, Pages.Pages):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
 
+        tk.Frame.__init__(self, parent)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/accueil.jpg")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)

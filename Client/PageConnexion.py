@@ -3,13 +3,15 @@ import tkinter as tk
 import hashlib
 import socket
 import json
+import Pages
 from PIL import Image, ImageTk
 
 import PageInscription
 import PageAccueil
 
-class PageConnexion(tk.Frame):
+class PageConnexion(tk.Frame, Pages.Pages):
     def __init__(self, parent, controller):
+
 
         def connexion(event=None):
             entryUser = self.entryUser.get()
@@ -29,9 +31,8 @@ class PageConnexion(tk.Frame):
             data = json.loads(r)
 
             if(data["status"] == 200 and data["valeurs"]):
+                Pages.Pages.id_utilisateur = data["valeurs"]
                 controller.show_frame(PageAccueil.PageAccueil)
-                print("ici")
-
 
 
         tk.Frame.__init__(self, parent)

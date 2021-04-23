@@ -4,14 +4,17 @@ from tkinter.ttk import *
 import socket
 import json
 import PageAccueil
+import Pages
 from PIL import Image, ImageTk
 import PageAjouterVin
 import PageAjouterCave
 
 
 
-class MesCaves(tk.Frame):
+
+class MesCaves(tk.Frame, Pages.Pages):
     def __init__(self, parent, controller):
+
         tk.Frame.__init__(self, parent)
 
         def recupVins():
