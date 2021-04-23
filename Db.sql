@@ -43,7 +43,7 @@ CREATE TABLE Vin(
    Année INT,
    Quantité INT,
    Id_Cave INT NOT NULL,
-   Image BLOB,
+   Image LONGTEXT,
    PRIMARY KEY(Id_Vin),
    FOREIGN KEY(Id_Cave) REFERENCES Cave(Id_Cave)
 );
