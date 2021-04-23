@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3ffa49e-1048-4147-974e-58bbf12e1b86" name="Default Changelist" comment="Clients en plusieurs pages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/MesCaves.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/MesCaves.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAccueil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAccueil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAjouterCave.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterCave.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAjouterVin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterVin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageConnexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageConnexion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/PageInscription.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageInscription.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/PageRecherche.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageRecherche.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client.py" afterDir="false" />

@@ -9,7 +9,7 @@ import PageConnexion
 
 class PageInscription(tk.Frame):
 
-    def __init__(self, parent, controller,p):
+    def __init__(self, parent, controller):
         def inscription(event=None):
             entryName = self.entryName.get()
             entryFirstName = self.entryFirstName.get()
