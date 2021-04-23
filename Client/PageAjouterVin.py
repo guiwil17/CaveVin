@@ -5,19 +5,16 @@ import socket
 import json
 import PageAccueil
 import base64
-import requests
-from Crypto.Cipher import AES
 
 class PageAjouterVin(tk.Frame):
-    def __init__(self, parent, controller, attr=None):
+    def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.config(width=600, height=400)
-        can = tk.Canvas(self, width=600, height=400)
+        self.config(width=1200, height=800)
+        can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/bouteilles.jpg")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
-        print(attr)
-        self.entryPhoto = ""
+
 
         can.create_text(300, 40, text="Ajouter un Vin", font=("Montserrat", 22, "bold"), fill="white")
 
@@ -27,7 +24,8 @@ class PageAjouterVin(tk.Frame):
 
         def choisir_photo(event=None):
             filename = tk.filedialog.askopenfilename(initialdir="/", title="Choisir une photo", filetypes=(("jpg files", "*.jpg"), ("PNG files", "*.png"), ("all files", "*.*")))
-            self.entryPhoto = filename
+            print('choisi :', filename)
+            return filename
 
         can.create_text(150, 80, text="Photo", font=("Montserrat", 12, "bold"), fill="white")
 
@@ -46,19 +44,7 @@ class PageAjouterVin(tk.Frame):
         entryType = tk.Entry(can, font=("Montserrat", 12, "bold"), bg="white", fg="black", show="*", justify="center")
         entryType.place(x=230, y=215)
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("93.7.175.167", 1111))
-
-        m = {"fonction": "get_caves", "paramètres": [2]}
-        data = json.dumps(m)
-
-        s.sendall(bytes(data, encoding="utf-8"))
-
-        r = s.recv(9999999)
-        r = r.decode("utf-8")
-        data = json.loads(r)
-        if (data["status"] == 200 and data["valeurs"]):
-            OptionList = data["valeurs"]
+        OptionList = ["Rouge", "Blanc","Rosé"]
         variable = tk.StringVar(self)
         variable.set(OptionList[0])
 
@@ -76,6 +62,10 @@ class PageAjouterVin(tk.Frame):
         entryCommentaire = tk.Entry(can, font=("Montserrat", 12, "bold"), bg="white", fg="black", show="*", justify="center")
         entryCommentaire.place(x=230, y=315)
 
+
+        buttonRecherche = tk.Button(can, text="Rechercher", padx=23, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44",
+                                 fg="white")
+        buttonRecherche.place(x=250, y=350)
 
         def ajouter_vin():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

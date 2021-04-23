@@ -6,7 +6,7 @@ import PageAccueil
 
 
 class PageRecherche(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller,p):
         tk.Frame.__init__(self, parent)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)

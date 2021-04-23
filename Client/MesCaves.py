@@ -5,11 +5,15 @@ import socket
 import json
 import PageAccueil
 from PIL import Image, ImageTk
+import PageAjouterVin
+import PageAjouterCave
+
 
 
 class MesCaves(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         def recupVins():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
@@ -38,10 +42,15 @@ class MesCaves(tk.Frame):
 
 
         self.imgHome = tk.PhotoImage(file="img/home.png")
+        self.imgcave = tk.PhotoImage(file="img/cave.png")
         self.imgEmailReceive = tk.PhotoImage(file="img/email_recu.png")
         self.imgEmailSend = tk.PhotoImage(file="img/email_envoye.png")
+
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
         buttonHome.place(x=5,y=5)
+
+        button_Ajouter_cave = tk.Button(can, image=self.imgcave, command=lambda: controller.show_frame(PageAjouterCave.PageAjouterCave))
+        button_Ajouter_cave.place(x=60, y=5)
 
         buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
         buttonMailReceive.place(x=1150, y=5)
@@ -50,6 +59,13 @@ class MesCaves(tk.Frame):
         buttonMailSend.place(x=1100, y=5)
 
         titre = ("Time New Roman", 15, "bold")
+
+        button_filtre = tk.Button(can, text="Filtrer")
+        button_filtre.place(x=750, y=150)
+
+        button_Ajouter_vin = tk.Button(can,font=titre,text="Ajouter un vin", pady=0, bg="#AC1E44", command=lambda: controller.show_frame(PageAjouterVin.PageAjouterVin))
+        button_Ajouter_vin.place(x=560, y=40)
+
         #Filtre
         can.create_text(70, 160, text="Filtre", font=titre, fill="white")
         filtreNom = tk.Entry(can, font=("Montserrat", 12, "bold"), width=13, bg="white", fg="black", justify="center")
@@ -63,6 +79,9 @@ class MesCaves(tk.Frame):
 
         filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"), width=9, bg="white", fg="black", justify="center")
         filtreCave.place(x=620, y=150)
+
+        button_filtre = tk.Button(can, text="Filtrer")
+        button_filtre.place(x=750, y=150)
 
         #Tableau
 

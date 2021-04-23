@@ -10,12 +10,17 @@ import PageInscription
 import MesCaves
 LARGE_FONT= ("Verdana", 12)
 
+
+class Page:
+    id_utilisateur=0
+
 class main(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
+        p = Page()
 
 
         container.grid_rowconfigure(0, weight=1)
@@ -24,17 +29,19 @@ class main(tk.Tk):
         self.frames = {}
 
         for F in (PageAccueil.PageAccueil, PageRecherche.PageRecherche,PageAjouterVin.PageAjouterVin, PageAjouterCave.PageAjouterCave, PageInscription.PageInscription, PageConnexion.PageConnexion, MesCaves.MesCaves):
-            frame = F(container, self)
+            frame = F(container, self,p)
 
             self.frames[F] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(PageAjouterVin.PageAjouterVin)
+        self.show_frame(PageConnexion.PageConnexion,p)
 
-    def show_frame(self, cont):
+    def show_frame(self, cont, p=None):
         frame = self.frames[cont]
         frame.tkraise()
+        if p:
+            frame.p = p
 
 app = main()
 app.geometry("1200x800")
