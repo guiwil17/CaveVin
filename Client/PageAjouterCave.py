@@ -20,9 +20,9 @@ class PageAjouterCave(tk.Frame, Pages.Pages):
 
         can.create_text(600, 150, text="Ajouter une Cave", font=("Montserrat", 30, "bold"), fill="white")
 
-        can.create_text(500, 300, text="Nom", font=("Montserrat", 18, "bold"), fill="white")
+        can.create_text(390, 300, text="Nom", font=("Montserrat", 18, "bold"), fill="white")
         entryLabel = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
-        entryLabel.place(x=600, y=285)
+        entryLabel.place(x=430, y=285)
 
         buttonRecherche = tk.Button(can, text="Créer", padx=23, font=("Montserrat", 18, "bold"), pady=0, bg="#AC1E44",
                                  fg="white")

@@ -47,36 +47,36 @@ class PageInscription(tk.Frame):
         can.place(x=0, y=0)
         fonts = ("Time New Roman", 35, "bold")
         fonts2 = ("Time New Roman", 18)
-        can.create_text(325, 100, text="Création de compte", font=fonts, fill="black")
+        can.create_text(400, 100, text="Création de compte", font=fonts, fill="black")
 
-        can.create_text(180, 250, text="Nom", font=fonts2, fill="black")
-        can.create_text(170, 300, text="Prénom", font=fonts2, fill="black")
-        can.create_text(170, 350, text="Pseudo", font=fonts2, fill="black")
-        can.create_text(160, 400, text="Téléphone", font=fonts2, fill="black")
-        can.create_text(150, 450, text="Mot de passe", font=fonts2, fill="black")
-        can.create_text(150, 500, text="Confirmation \nmot de passe", font=fonts2, fill="black")
+        can.create_text(240, 250, text="Nom", font=fonts2, fill="black")
+        can.create_text(225, 300, text="Prénom", font=fonts2, fill="black")
+        can.create_text(225, 350, text="Pseudo", font=fonts2, fill="black")
+        can.create_text(210, 400, text="Téléphone", font=fonts2, fill="black")
+        can.create_text(195, 450, text="Mot de passe", font=fonts2, fill="black")
+        can.create_text(195, 500, text="Confirmation \nmot de passe", font=fonts2, fill="black")
 
         self.entryName = tk.Entry(can, font=fonts2, fg="black", justify="center")
-        self.entryName.place(x=250, y=235)
+        self.entryName.place(x=280, y=235)
 
         self.entryFirstName = tk.Entry(can, font=fonts2, fg="black", justify="center")
-        self.entryFirstName.place(x=250, y=285)
+        self.entryFirstName.place(x=280, y=285)
 
         self.entryLogin = tk.Entry(can, font=fonts2, fg="black", justify="center")
-        self.entryLogin.place(x=250, y=335)
+        self.entryLogin.place(x=280, y=335)
 
         self.entryPhone = tk.Entry(can, font=fonts2, fg="black", justify="center")
-        self.entryPhone.place(x=250, y=385)
+        self.entryPhone.place(x=280, y=385)
 
         self.entryPass = tk.Entry(can, font=fonts2, fg="black", show="*", justify="center")
-        self.entryPass.place(x=250, y=435)
+        self.entryPass.place(x=280, y=435)
 
         self.entryConfirmPass = tk.Entry(can, font=fonts2, fg="black", show="*", justify="center")
-        self.entryConfirmPass.place(x=250, y=485)
+        self.entryConfirmPass.place(x=280, y=485)
 
 
         buttonValid = tk.Button(can, text="Créer le compte", padx=50, font=fonts2, pady=0, bg="#AC1E44", fg="white", command=inscription)
-        buttonValid.place(x=160, y=580)
+        buttonValid.place(x=270, y=580)
 
         buttonRetour = tk.Button(can, text="Retour à la page de connexion", font=("Time New Roman", 16), pady=0, bg="#AC1E44", fg="white", command=lambda: controller.show_frame(PageConnexion.PageConnexion))
-        buttonRetour.place(x=155, y=650)
+        buttonRetour.place(x=263, y=650)
