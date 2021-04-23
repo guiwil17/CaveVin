@@ -11,33 +11,45 @@ import MesCaves
 LARGE_FONT= ("Verdana", 12)
 
 
-
 class main(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
 
 
 
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
 
         for F in (PageAccueil.PageAccueil, PageRecherche.PageRecherche,PageAjouterVin.PageAjouterVin, PageAjouterCave.PageAjouterCave, PageInscription.PageInscription, PageConnexion.PageConnexion, MesCaves.MesCaves):
-            frame = F(container, self)
+            frame = F(self.container, self)
 
             self.frames[F] = frame
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(PageConnexion.PageConnexion)
+        self.show_frame(PageConnexion.PageConnexion, "Connexion")
 
-    def show_frame(self, cont):
-        frame = self.frames[cont]
+
+    def show_frame(self, cont, name=None):
+        if(name == "Connexion"):
+            print("ttttttttttt")
+            frame = PageConnexion.PageConnexion(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "MesCaves"):
+            print("ooooooooooooooooooooooh")
+            frame = MesCaves.MesCaves(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+        else:
+            frame = self.frames[cont]
+
         frame.tkraise()
+
+
 
 
 app = main()

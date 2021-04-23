@@ -46,6 +46,7 @@ class PageAjouterVin(tk.Frame):
         entryType = tk.Entry(can, font=("Montserrat", 12, "bold"), bg="white", fg="black", show="*", justify="center")
         entryType.place(x=230, y=215)
 
+        
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("93.7.175.167", 1111))
 
@@ -80,6 +81,7 @@ class PageAjouterVin(tk.Frame):
         def ajouter_vin():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
+            
             with open("img/cave.jpg", "rb") as img_file:
                 my_string = base64.b64encode(img_file.read())
 

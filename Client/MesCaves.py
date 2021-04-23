@@ -17,32 +17,23 @@ class MesCaves(tk.Frame, Pages.Pages):
 
         tk.Frame.__init__(self, parent)
 
-        def recupVins():
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("93.7.175.167", 1111))
+        def clique():
+            print("ddddddddddddddddddddddd")
 
-            m = {"fonction": "get_vins", "paramètres": [2]}
-            data = json.dumps(m)
 
-            s.sendall(bytes(data, encoding="utf-8"))
 
-            r = s.recv(9999999)
-            r = r.decode("utf-8")
-            data = json.loads(r)
 
-            if (data["status"] == 200 and data["valeurs"]):
-               return data["valeurs"]
+        if(Pages.Pages.Page_MesCaves):
+            data = recupVins()
 
-       # data = recupVins()
-        #print(data)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
+        print("la")
         self.img = ImageTk.PhotoImage(file="img/vigne2.jpg")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
         style = Style(can)
         style.configure('Treeview', rowheight=50)
-
 
         self.imgHome = tk.PhotoImage(file="img/home.png")
         self.imgcave = tk.PhotoImage(file="img/cave.png")
@@ -80,7 +71,7 @@ class MesCaves(tk.Frame, Pages.Pages):
         filtreAnnee = tk.Entry(can, font=("Montserrat", 12, "bold"), width=7, bg="white", fg="black", justify="center")
         filtreAnnee.place(x=520, y=150)
 
-        filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"), width=9, bg="white", fg="black", justify="center")
+        filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"),  width=9, bg="white", fg="black", justify="center")
         filtreCave.place(x=620, y=150)
 
         button_filtre = tk.Button(can, text="Filtrer")
@@ -118,6 +109,28 @@ class MesCaves(tk.Frame, Pages.Pages):
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
+        for d in Pages.Pages.MesCaves:
+            tableau.insert('', 'end', values=(
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+        for d in Pages.Pages.MesCaves:
+            tableau.insert('', 'end', values=(
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+        for d in Pages.Pages.MesCaves:
+            tableau.insert('', 'end', values=(
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+
+    def recupVins(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("93.7.175.167", 1111))
+
+        m = {"fonction": "get_vins", "paramètres": [2]}
+        data = json.dumps(m)
+
+        s.sendall(bytes(data, encoding="utf-8"))
+
+        r = s.recv(9999999)
+        r = r.decode("utf-8")
+        data = json.loads(r)
 
 
 

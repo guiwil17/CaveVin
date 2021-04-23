@@ -101,6 +101,7 @@ class ClientThread(threading.Thread):
             for (label) in cursor:
                  tab.append(label[0])
             self.retour = {"status": 200, "valeurs": tab}
+            
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -139,6 +140,31 @@ class ClientThread(threading.Thread):
         mydb.close()
         cursor.close()
 
+    def get_random_id(self):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "SELECT Utilisateur.Id_Personne, Pseudo FROM utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
+
+        try:
+            cursor.execute(query)
+            for (Id_Personne, Pseudo) in cursor:
+               self.retour = {"status": 200, "valeurs": [Id_Personne,Pseudo]}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
     def ajouter_vin(self, nom, annee, type, cave, commentaire, image):
         mydb = mysql.connector.connect(
             host="localhost",
@@ -151,7 +177,7 @@ class ClientThread(threading.Thread):
         query = ("INSERT INTO Vin (Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave, Image) VALUES(null, %s, %s, %s, %s, %s, %s, %s, %s)")
 
         try:
-            cursor.execute(query, (nom, type, commentaire, False, 2010,  10,5,  image))
+            cursor.execute(query, (nom, type, commentaire, False, int(annee),  10, 5,  image))
             self.retour = {"status": 200, "valeurs": True}
             mydb.commit()
         except mysql.connector.Error as err:
@@ -197,8 +223,9 @@ class ClientThread(threading.Thread):
         elif (test['fonction'] == "get_caves"):
             self.get_caves(test['paramètres'][0])
         elif(test['fonction'] == "ajouter_vin"):
-            print("la")
             self.ajouter_vin(test['paramètres'][0], test['paramètres'][1],test['paramètres'][2],test['paramètres'][3],test['paramètres'][4],test['paramètres'][5])
+        elif (test['fonction'] == "get_random_id"):
+            self.get_random_id()
         #for v in r :
          #   print(v)
 

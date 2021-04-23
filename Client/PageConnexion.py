@@ -29,7 +29,7 @@ class PageConnexion(tk.Frame, Pages.Pages):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
-
+            print(self.focus_get())
             if(data["status"] == 200 and data["valeurs"]):
                 Pages.Pages.id_utilisateur = data["valeurs"]
                 controller.show_frame(PageAccueil.PageAccueil)
