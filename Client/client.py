@@ -25,27 +25,35 @@ class main(tk.Tk):
 
         self.frames = {}
 
-        for F in (PageAccueil.PageAccueil, PageRecherche.PageRecherche,PageAjouterVin.PageAjouterVin, PageAjouterCave.PageAjouterCave, PageInscription.PageInscription, PageConnexion.PageConnexion, MesCaves.MesCaves):
-            frame = F(self.container, self)
 
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(PageConnexion.PageConnexion, "Connexion")
+        self.show_frame("PageConnexion")
 
 
-    def show_frame(self, cont, name=None):
-        if(name == "Connexion"):
-            print("ttttttttttt")
+    def show_frame(self, name=None, param=None):
+        if(name == "PageConnexion"):
             frame = PageConnexion.PageConnexion(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "MesCaves"):
             print("ooooooooooooooooooooooh")
-            frame = MesCaves.MesCaves(self.container, self)
+            frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
-        else:
-            frame = self.frames[cont]
+        elif(name == "PageAccueil"):
+            print(param[0])
+            frame = PageAccueil.PageAccueil(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "PageRecherche"):
+            frame = PageRecherche.PageRecherche(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "PageAjouterVin"):
+            frame = PageAjouterVin.PageAjouterVin(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "PageAjouterCave"):
+            frame = PageAjouterCave.PageAjouterCave(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "PageInscription"):
+            frame = PageInscription.PageInscription(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+
 
         frame.tkraise()
 

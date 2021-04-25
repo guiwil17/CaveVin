@@ -37,7 +37,7 @@ class PageInscription(tk.Frame):
                 r = r.decode("utf-8")
                 data = json.loads(r)
 
-                controller.show_frame(PageConnexion.PageConnexion)
+                controller.show_frame("PageConnexion")
 
 
         tk.Frame.__init__(self, parent)
@@ -78,5 +78,5 @@ class PageInscription(tk.Frame):
         buttonValid = tk.Button(can, text="Créer le compte", padx=50, font=fonts2, pady=0, bg="#AC1E44", fg="white", command=inscription)
         buttonValid.place(x=270, y=580)
 
-        buttonRetour = tk.Button(can, text="Retour à la page de connexion", font=("Time New Roman", 16), pady=0, bg="#AC1E44", fg="white", command=lambda: controller.show_frame(PageConnexion.PageConnexion))
+        buttonRetour = tk.Button(can, text="Retour à la page de connexion", font=("Time New Roman", 16), pady=0, bg="#AC1E44", fg="white", command=lambda: controller.show_frame("PageConnexion"))
         buttonRetour.place(x=263, y=650)

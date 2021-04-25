@@ -8,23 +8,31 @@ import Pages
 from PIL import Image, ImageTk
 import PageAjouterVin
 import PageAjouterCave
+import base64
+import io
 
 
-
-
-class MesCaves(tk.Frame, Pages.Pages):
-    def __init__(self, parent, controller):
+class MesCaves(tk.Frame):
+    def __init__(self, parent, controller,id_user):
 
         tk.Frame.__init__(self, parent)
 
-        def clique():
-            print("ddddddddddddddddddddddd")
+        def recupVins():
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("93.7.175.167", 1111))
 
+            m = {"fonction": "get_vins", "paramètres": [id_user]}
+            data = json.dumps(m)
 
+            s.sendall(bytes(data, encoding="utf-8"))
 
+            r = s.recv(9999999)
+            r = r.decode("utf-8")
+            data = json.loads(r)
 
-        if(Pages.Pages.Page_MesCaves):
-            data = recupVins()
+            return data['valeurs']
+
+        data = recupVins()
 
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
@@ -40,16 +48,16 @@ class MesCaves(tk.Frame, Pages.Pages):
         self.imgEmailReceive = tk.PhotoImage(file="img/email_recu.png")
         self.imgEmailSend = tk.PhotoImage(file="img/email_envoye.png")
 
-        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
+        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonHome.place(x=5,y=5)
 
-        button_Ajouter_cave = tk.Button(can, image=self.imgcave, command=lambda: controller.show_frame(PageAjouterCave.PageAjouterCave))
+        button_Ajouter_cave = tk.Button(can, image=self.imgcave, command=lambda: controller.show_frame("PageAjouterCave", [id_user]))
         button_Ajouter_cave.place(x=60, y=5)
 
-        buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
+        buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonMailReceive.place(x=1150, y=5)
 
-        buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame(PageAccueil.PageAccueil))
+        buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonMailSend.place(x=1100, y=5)
 
         titre = ("Time New Roman", 15, "bold")
@@ -57,7 +65,7 @@ class MesCaves(tk.Frame, Pages.Pages):
         button_filtre = tk.Button(can, text="Filtrer")
         button_filtre.place(x=750, y=150)
 
-        button_Ajouter_vin = tk.Button(can,font=titre,text="Ajouter un vin", pady=0, bg="#AC1E44", command=lambda: controller.show_frame(PageAjouterVin.PageAjouterVin))
+        button_Ajouter_vin = tk.Button(can,font=titre,text="Ajouter un vin", pady=0, bg="#AC1E44", command=lambda: controller.show_frame("PageAjouterVin", [id_user]))
         button_Ajouter_vin.place(x=560, y=40)
 
         #Filtre
@@ -109,28 +117,25 @@ class MesCaves(tk.Frame, Pages.Pages):
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
-        for d in Pages.Pages.MesCaves:
+        for d in data:
+
+            if(d["Image"] != None):
+                byte =  d["Image"].encode('utf-8')
+                print(byte)
+                #img = base64.decodebytes(byte)
+                image = tk.PhotoImage(data=byte)
+                tableau.insert('', 'end',  text="",image=image,  values=(
+               d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+            else:
+                tableau.insert('', 'end', values=(
+                    d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
+                    d["Echangeable"]))
+        for d in data:
             tableau.insert('', 'end', values=(
             d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in Pages.Pages.MesCaves:
+        for d in data:
             tableau.insert('', 'end', values=(
             d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        for d in Pages.Pages.MesCaves:
-            tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-
-    def recupVins(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(("93.7.175.167", 1111))
-
-        m = {"fonction": "get_vins", "paramètres": [2]}
-        data = json.dumps(m)
-
-        s.sendall(bytes(data, encoding="utf-8"))
-
-        r = s.recv(9999999)
-        r = r.decode("utf-8")
-        data = json.loads(r)
 
 
 

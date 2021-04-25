@@ -201,15 +201,9 @@ class ClientThread(threading.Thread):
             if "}" in message:
                 break
 
-        print(r)
-
         test = json.loads(r)
 
         print(test)
-
-
-
-
 
 
         if(test['fonction'] == "login"):

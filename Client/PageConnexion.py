@@ -31,8 +31,7 @@ class PageConnexion(tk.Frame, Pages.Pages):
             data = json.loads(r)
             print(self.focus_get())
             if(data["status"] == 200 and data["valeurs"]):
-                Pages.Pages.id_utilisateur = data["valeurs"]
-                controller.show_frame(PageAccueil.PageAccueil)
+                controller.show_frame("PageAccueil", [data["valeurs"]])
 
 
         tk.Frame.__init__(self, parent)
@@ -58,5 +57,5 @@ class PageConnexion(tk.Frame, Pages.Pages):
         buttonValid.place(x=370, y=400)
 
         buttonCreer = tk.Button(can, text="Créer un compte", font=fonts2, pady=0, bg="#AC1E44",
-                                 fg="white", command=lambda: controller.show_frame(PageInscription.PageInscription))
+                                 fg="white", command=lambda: controller.show_frame("PageInscription"))
         buttonCreer.place(x=420, y=480)

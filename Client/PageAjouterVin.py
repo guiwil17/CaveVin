@@ -9,20 +9,19 @@ import requests
 from Crypto.Cipher import AES
 
 class PageAjouterVin(tk.Frame):
-    def __init__(self, parent, controller, attr=None):
+    def __init__(self, parent, controller, id_user):
         tk.Frame.__init__(self, parent)
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/bouteilles.jpg")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
-        print(attr)
         self.entryPhoto = ""
 
         can.create_text(300, 40, text="Ajouter un Vin", font=("Montserrat", 22, "bold"), fill="white")
 
         self.imgHome = tk.PhotoImage(file="img/home.png")
-        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame(PageAccueil.PageAccueil))
+        buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonHome.place(x=5,y=5)
 
         def choisir_photo(event=None):
@@ -50,7 +49,7 @@ class PageAjouterVin(tk.Frame):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("93.7.175.167", 1111))
 
-        m = {"fonction": "get_caves", "paramètres": [2]}
+        m = {"fonction": "get_caves", "paramètres": [id_user]}
         data = json.dumps(m)
 
         s.sendall(bytes(data, encoding="utf-8"))
@@ -87,12 +86,6 @@ class PageAjouterVin(tk.Frame):
 
             my_string = my_string.decode('utf-8')
 
-            print(entryNom)
-            print(entryAnnee)
-            print(entryType)
-            print(variable.get())
-            print(entryCommentaire)
-
             m = {"fonction": "ajouter_vin", "paramètres": [entryNom.get(),entryAnnee.get(),entryType.get(),variable.get(),entryCommentaire.get(),my_string]}
             data = json.dumps(m)
             print(data)
@@ -106,7 +99,7 @@ class PageAjouterVin(tk.Frame):
             data = json.loads(r)
 
             if (data["status"] == 200 and data["valeurs"]):
-                controller.show_frame(PageAccueil.PageAccueil)
+                controller.show_frame("PageAccueil", [id_user])
                 print("ici")
 
         buttonRecherche = tk.Button(can, text="Ajouter", padx=23, font=("Montserrat", 12, "bold"), pady=0, bg="#AC1E44", fg="white", command=ajouter_vin)
