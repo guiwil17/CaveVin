@@ -91,4 +91,9 @@ INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  
 INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Beauséjour (Duffau Lagarosse), Saint Emilion', 'Bordeaux Rouge', '18/20', FALSE, 2002, 2, 3);
 INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', '16/20', TRUE, 2012, 8, 3);
 
+CREATE TRIGGER `Ajout_user` AFTER INSERT ON `personne`
+ FOR EACH ROW INSERT INTO Cave Values(null, "Maison Principale", NEW.Id_Personne);
+
 COMMIT;
+
+

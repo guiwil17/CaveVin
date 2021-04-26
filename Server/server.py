@@ -35,6 +35,37 @@ class ClientThread(threading.Thread):
             self.retour = {"status": 200, "valeurs": Id_Personne[0]}
 
 
+    def get_id_cave(self, id_personne, label):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        print("Label")
+        print(label)
+        query = ("SELECT Id_Cave FROM cave WHERE label = %s AND Id_Personne = %s")
+        id = -1;
+
+        try:
+            cursor.execute(query, (label, id_personne))
+            for (Id_Cave) in cursor:
+                self.retour = {"status": 200, "valeurs": Id_Cave[0]}
+                id = Id_Cave[0]
+
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+        return id
+
+
     def create_account(self, nom, prenom, pseudo, telephone, password):
 
         mydb = mysql.connector.connect(
@@ -122,14 +153,14 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
+        query = ("SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
 
         try:
             tab = []
             cursor.execute(query, (id_utilisateur,))
-            for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
                  tab.append(
-                     {"Nom": Nom, "Type": Type,"Notation": Notation, "Echangeable": Echangeable, "Année": Année, "Quantité": Quantité, "Image": Image, "label": label})
+                     {"Nom": Nom, "Type": Type,"Notation": Notation, "Echangeable": Echangeable, "Année": Année, "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
         except mysql.connector.Error as err:
             print(err)
@@ -139,6 +170,88 @@ class ClientThread(threading.Thread):
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
         mydb.close()
         cursor.close()
+
+    def filtre(self, id_utilisateur, valeurs):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+        tab = []
+
+        cursor = mydb.cursor()
+        if("Id_Cave" in valeurs):
+            index = valeurs.index("Id_Cave")
+            valeurs[index] = "Vin.Id_Cave"
+            print(valeurs[index])
+        if(len(valeurs) == 2):
+            print(valeurs)
+            query = ("SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " + valeurs[0] + " = %s;")
+            try:
+
+                cursor.execute(query, (id_utilisateur, valeurs[1]))
+                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+                    print("bnbbbbbbbbbbbbbbbbb")
+                    tab.append(
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
+                         "Quantité": Quantité, "Image": Image, "label": label})
+                print(tab)
+                self.retour = {"status": 200, "valeurs": tab}
+            except mysql.connector.Error as err:
+                print(err)
+                print("Error Code:", err.errno)
+                print("SQLSTATE", err.sqlstate)
+                print("Message", err.msg)
+                self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        elif (len(valeurs) == 4):
+            query = ("SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " + valeurs[0] + " = %s AND " + valeurs[2] + " = %s;")
+            try:
+                cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3]))
+                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+                    tab.append(
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
+                         "Quantité": Quantité, "Image": Image, "label": label})
+                    self.retour = {"status": 200, "valeurs": tab}
+            except mysql.connector.Error as err:
+                print(err)
+                print("Error Code:", err.errno)
+                print("SQLSTATE", err.sqlstate)
+                print("Message", err.msg)
+                self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+        elif (len(valeurs) == 6):
+            query = ("SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " + valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s;")
+            try:
+                cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5]))
+                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+                    tab.append(
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
+                         "Quantité": Quantité, "Image": Image, "label": label})
+                    self.retour = {"status": 200, "valeurs": tab}
+            except mysql.connector.Error as err:
+                print(err)
+                print("Error Code:", err.errno)
+                print("SQLSTATE", err.sqlstate)
+                print("Message", err.msg)
+                self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        else:
+            query = (
+                "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " + valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s AND " + valeurs[6] + " = %s;")
+            try:
+                cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5], valeurs[7]))
+                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+                    tab.append(
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
+                         "Quantité": Quantité, "Image": Image, "label": label})
+                    self.retour = {"status": 200, "valeurs": tab}
+            except mysql.connector.Error as err:
+                print(err)
+                print("Error Code:", err.errno)
+                print("SQLSTATE", err.sqlstate)
+                print("Message", err.msg)
+                self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
 
     def get_random_id(self):
         mydb = mysql.connector.connect(
@@ -165,7 +278,7 @@ class ClientThread(threading.Thread):
         mydb.close()
         cursor.close()
 
-    def ajouter_vin(self, nom, annee, type, cave, commentaire, image):
+    def ajouter_vin(self, nom, annee, type, cave, commentaire, image, echangeable, quantite, user_id ):
         mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -173,11 +286,15 @@ class ClientThread(threading.Thread):
             database='mywine'
         )
 
+        echange = False
+        if(echangeable == 'True'):
+            echange = True
         cursor = mydb.cursor()
         query = ("INSERT INTO Vin (Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave, Image) VALUES(null, %s, %s, %s, %s, %s, %s, %s, %s)")
 
+        id = self.get_id_cave(user_id, cave)
         try:
-            cursor.execute(query, (nom, type, commentaire, False, int(annee),  10, 5,  image))
+            cursor.execute(query, (nom, type, commentaire, echange, int(annee),  quantite, id,  image))
             self.retour = {"status": 200, "valeurs": True}
             mydb.commit()
         except mysql.connector.Error as err:
@@ -186,6 +303,7 @@ class ClientThread(threading.Thread):
             print("SQLSTATE", err.sqlstate)
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
 
 
     def run(self):
@@ -217,9 +335,15 @@ class ClientThread(threading.Thread):
         elif (test['fonction'] == "get_caves"):
             self.get_caves(test['paramètres'][0])
         elif(test['fonction'] == "ajouter_vin"):
-            self.ajouter_vin(test['paramètres'][0], test['paramètres'][1],test['paramètres'][2],test['paramètres'][3],test['paramètres'][4],test['paramètres'][5])
+            self.ajouter_vin(test['paramètres'][0], test['paramètres'][1],test['paramètres'][2],test['paramètres'][3],test['paramètres'][4],test['paramètres'][5],test['paramètres'][6], test['paramètres'][7], test['paramètres'][8])
         elif (test['fonction'] == "get_random_id"):
             self.get_random_id()
+        elif(test['fonction'] == "filtre"):
+            self.filtre(test['paramètres'][0], test['paramètres'][1])
+        elif (test['fonction'] == "get_id_cave"):
+            print("ici")
+            print(test['paramètres'][1])
+            self.get_id_cave(test['paramètres'][0], test['paramètres'][1])
         #for v in r :
          #   print(v)
 

@@ -34,7 +34,6 @@ class main(tk.Tk):
             frame = PageConnexion.PageConnexion(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "MesCaves"):
-            print("ooooooooooooooooooooooh")
             frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif(name == "PageAccueil"):
