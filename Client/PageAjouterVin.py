@@ -80,9 +80,11 @@ class PageAjouterVin(tk.Frame):
         entryQuantity.place(x=700, y=435)
 
         can.create_text(435, 500, text="Échangeable", font=("Montserrat", 18, "bold"), fill="white")
-        tradable=False
-        entryTradable = tk.Checkbutton(can,variable=tradable, onvalue=True, offvalue=False)
-        entryTradable.place(x=700, y=485)
+        self.tradable = tk.BooleanVar()
+        self.cb = tk.Checkbutton(self, onvalue=True, offvalue=False,
+                                 variable=self.tradable,
+                                 )
+        self.cb.place(x=700, y=485)
 
         can.create_text(435, 550, text="Commentaire", font=("Montserrat", 18, "bold"), fill="white")
         entryCommentaire = tk.Text(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", height=3, width=21)
@@ -99,7 +101,7 @@ class PageAjouterVin(tk.Frame):
 
             my_string = my_string.decode('utf-8')
 
-            m = {"fonction": "ajouter_vin", "paramètres": [entryNom.get(),entryAnnee.get(),entryType.get(),variable.get(),entryCommentaire.get("1.0",'end-1c'),my_string, tradable, entryQuantity.get(), id_user]}
+            m = {"fonction": "ajouter_vin", "paramètres": [entryNom.get(),entryAnnee.get(),entryType.get(),variable.get(),entryCommentaire.get("1.0",'end-1c'),my_string, str(self.tradable.get()), entryQuantity.get(), id_user]}
             data = json.dumps(m)
             print(data)
             #data = json.loads(my_string)
@@ -113,7 +115,7 @@ class PageAjouterVin(tk.Frame):
 
             if (data["status"] == 200 and data["valeurs"]):
                 controller.show_frame("PageAccueil", [id_user])
-                print("ici")
+           #     print("ici")
 
         buttonRecherche = tk.Button(can, text="Ajouter", padx=23, font=("Montserrat", 18, "bold"), pady=0, bg="#AC1E44", fg="white", command=ajouter_vin)
         buttonRecherche.place(x=600, y=650)

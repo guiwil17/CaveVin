@@ -8,6 +8,7 @@ import PageAccueil
 import PageConnexion
 import PageInscription
 import MesCaves
+import VisiterCaves
 LARGE_FONT= ("Verdana", 12)
 
 
@@ -26,7 +27,7 @@ class main(tk.Tk):
         self.frames = {}
 
 
-        self.show_frame("PageConnexion")
+        self.show_frame("VisiterCaves", [2,1])
 
 
     def show_frame(self, name=None, param=None):
@@ -52,6 +53,11 @@ class main(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageInscription"):
             frame = PageInscription.PageInscription(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "VisiterCaves"):
+            print(param[0])
+            print(param[1])
+            frame = VisiterCaves.VisiterCaves(self.container, self, param[0], param[1])
             frame.grid(row=0, column=0, sticky="nsew")
 
 
