@@ -3,12 +3,16 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import Pages
 import PageAccueil
+import socket
+import json
 
-
-class PageRecherche(tk.Frame, Pages.Pages):
+class PageRecherche(tk.Frame):
     def __init__(self, parent, controller, id_user):
 
+
         tk.Frame.__init__(self, parent)
+
+
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/cave.jpg")
@@ -24,20 +28,53 @@ class PageRecherche(tk.Frame, Pages.Pages):
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user] ))
         buttonHome.place(x=5,y=5)
 
-        can.create_text(360, 260, text="Nom du propriétaire", font=fonts, fill="white")
+        can.create_text(450, 260, text="Pseudo du propriétaire", font=fonts, fill="white")
 
-        can.create_text(340, 310, text="Prénom du propriétaire", font=fonts, fill="white")
+        self.entryPseudo = tk.Entry(can,  font=fonts, bg="white", fg="black", justify="center")
+        self.entryPseudo.place(x=700, y=250)
+        def recherche():
+            entryPseudo = self.entryPseudo.get()
 
-        entryNom = tk.Entry(can,  font=fonts, bg="white", fg="black", justify="center")
-        entryNom.place(x=500, y=250)
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("93.7.175.167", 1111))
 
-        entryPrenom = tk.Entry(can, font=fonts, bg="white", fg="black", show="*", justify="center")
-        entryPrenom.place(x=500, y=300)
+            m = {"fonction": "get_id_user", "paramètres": [entryPseudo]}
+            data = json.dumps(m)
 
+            s.sendall(bytes(data, encoding="utf-8"))
+
+            r = s.recv(9999999)
+            r = r.decode("utf-8")
+            data = json.loads(r)
+            if(data["status"] == 200 and data["valeurs"]):
+                controller.show_frame("VisiterCaves", [id_user, int(data["valeurs"][0])])
+            else:
+                can.create_text(600, 300, text="Pseudo inconnu", font=fonts, fill="white")
+
+        def random():
+            print("rand")
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("93.7.175.167", 1111))
+
+            m = {"fonction": "get_random_id"}
+            data = json.dumps(m)
+
+            s.sendall(bytes(data, encoding="utf-8"))
+
+            r = s.recv(9999999)
+            r = r.decode("utf-8")
+            data = json.loads(r)
+            print(data["valeurs"][0])
+
+            if(data["status"] == 200 and data["valeurs"][0]!=id_user):
+                controller.show_frame("VisiterCaves", [id_user, int(data["valeurs"][0])])
+            else:
+                random()
         buttonRecherche = tk.Button(can, text="Rechercher", padx=23, font=fonts2, pady=0, bg="#AC1E44",
-                                 fg="white")
+                                 fg="white", command=recherche)
         buttonRecherche.place(x=550, y=400)
 
         buttonAleatoire = tk.Button(can, text="Cave Aléatoire", padx=10, font=fonts2, pady=0,
-                                 bg="#AC1E44", fg="white")
+                                 bg="#AC1E44", fg="white", command=random)
         buttonAleatoire.place(x=550, y=470)
+

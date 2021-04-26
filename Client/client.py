@@ -9,6 +9,8 @@ import PageConnexion
 import PageInscription
 import MesCaves
 import VisiterCaves
+import DemanderEchange
+
 LARGE_FONT= ("Verdana", 12)
 
 
@@ -27,7 +29,7 @@ class main(tk.Tk):
         self.frames = {}
 
 
-        self.show_frame("VisiterCaves", [2,1])
+        self.show_frame("PageConnexion")
 
 
     def show_frame(self, name=None, param=None):
@@ -35,11 +37,9 @@ class main(tk.Tk):
             frame = PageConnexion.PageConnexion(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "MesCaves"):
-            print("ooooooooooooooooooooooh")
             frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif(name == "PageAccueil"):
-            print(param[0])
             frame = PageAccueil.PageAccueil(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageRecherche"):
@@ -55,9 +55,10 @@ class main(tk.Tk):
             frame = PageInscription.PageInscription(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "VisiterCaves"):
-            print(param[0])
-            print(param[1])
             frame = VisiterCaves.VisiterCaves(self.container, self, param[0], param[1])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif(name == "DemanderEchange"):
+            frame = DemanderEchange.DemanderEchange(self.container, self, param[0], param[1], param[2])
             frame.grid(row=0, column=0, sticky="nsew")
 
 

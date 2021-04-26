@@ -10,10 +10,10 @@ import PageAjouterVin
 import PageAjouterCave
 import base64
 import io
-from tkinter.messagebox import *
 
-class MesCaves(tk.Frame):
-    def __init__(self, parent, controller,id_user):
+
+class DemanderEchange(tk.Frame):
+    def __init__(self, parent, controller, id_user, id_user_visite, id_vin_demande):
 
         tk.Frame.__init__(self, parent)
 
@@ -32,11 +32,30 @@ class MesCaves(tk.Frame):
 
             return data['valeurs']
 
+        def selectItem(a):
+            curItem = tableau.focus()
+            print("appel")
+            if(tableau.item(curItem)["values"][7]=="Demande d'échange (double clic)"):
+                #requête envoi demande d'échange
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
+
+                m = {"fonction": "demande_echange", "paramètres": [id_user, id_user_visite, id_vin_demande, int(tableau.item(curItem)["values"][8])]}
+                data = json.dumps(m)
+
+                s.sendall(bytes(data, encoding="utf-8"))
+
+                r = s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+
+                print(data['valeurs'])
+
         data = recupVins()
 
         self.config(width=1200, height=800)
         can = tk.Canvas(self, width=1200, height=800)
-        self.img = ImageTk.PhotoImage(file="img/vigne2.jpg")
+        self.img = ImageTk.PhotoImage(file="img/vigne1.jpg")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
         style = Style(can)
@@ -50,22 +69,18 @@ class MesCaves(tk.Frame):
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonHome.place(x=5,y=5)
 
-        button_Ajouter_cave = tk.Button(can, image=self.imgcave, command=lambda: controller.show_frame("PageAjouterCave", [id_user]))
-        button_Ajouter_cave.place(x=60, y=5)
-
         buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonMailReceive.place(x=1150, y=5)
 
         buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame("PageAccueil",[id_user]))
         buttonMailSend.place(x=1100, y=5)
 
-        titre = ("Time New Roman", 15, "bold")
+        titre = ("Time New Roman", 30, "bold")
 
         button_filtre = tk.Button(can, text="Filtrer")
         button_filtre.place(x=750, y=150)
 
-        button_Ajouter_vin = tk.Button(can,font=titre,text="Ajouter un vin", fg="white", pady=0, bg="#AC1E44", command=lambda: controller.show_frame("PageAjouterVin", [id_user]))
-        button_Ajouter_vin.place(x=560, y=40)
+        can.create_text(560, 40, text="Choisissez votre vin proposé", font=titre, fill="white")
 
         #Filtre
         can.create_text(70, 160, text="Filtre", font=titre, fill="white")
@@ -129,35 +144,11 @@ class MesCaves(tk.Frame):
            #     tableau.insert('', 'end', values=(
             #        d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
             #        d["Echangeable"]))
-        def modifier(a, id_user, id_vin):
-            print("modifier")
-            print(id_user, id_vin)
-
-        def supprimer(a, id_user, id_vin):
-            print("supprimer")
-            print(id_user, id_vin)
-
-        def clicker(id_user, id_vin):
-            global pop
-            pop = tk.Toplevel(controller)
-            pop.title("Action")
-            pop.geometry("250x150")
-            pop.config(bg="white")
-            pop.grab_set()
-            modifierPopup = tk.Button(pop, text="Modifier")
-            modifierPopup.place(x=50, y=20)
-            modifierPopup.bind('<Button-1>', modifier(self, id_user, id_vin))
-            supprimerPopup = tk.Button(pop, text="Supprimer")
-            supprimerPopup.place(x=150, y=20)
-            modifierPopup.bind('<Button-1>', supprimer(self, id_user, id_vin))
-
-        def selectItem(a):
-            curItem = tableau.focus()
-            msg = clicker(id_user, tableau.item(curItem)["values"][8])
-
         for d in data:
             tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"], d["Id"]))
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Demande d'échange (double clic)" if d["Echangeable"]==1  else "Non échangeable"), d["Id"]))
         tableau.bind('<Double-1>', selectItem)
+
+
 
 
