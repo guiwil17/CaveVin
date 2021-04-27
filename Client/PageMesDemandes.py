@@ -69,23 +69,75 @@ class PageMesDemandes(tk.Frame):
         style = Style()
         style.map('Treeview', foreground=fixed_map('foreground'), background=fixed_map('background'))
 
-        def clicker(id_user, id_vin):
-            global pop
-            pop = tk.Toplevel(controller)
-            pop.title("Action")
-            pop.geometry("250x150")
-            pop.config(bg="white")
-            pop.grab_set()
-            modifierPopup = tk.Button(pop, text="Modifier")
-            modifierPopup.place(x=50, y=20)
-            modifierPopup.bind('<Button-1>', modifier(self, id_user, id_vin))
-            supprimerPopup = tk.Button(pop, text="Supprimer")
-            supprimerPopup.place(x=150, y=20)
-            modifierPopup.bind('<Button-1>', supprimer(self, id_user, id_vin))
+        class Mbox(object):
+
+            root = None
+
+            def __init__(self, id_echange, pseudo):
+                tki = tkinter
+                self.top = tki.Toplevel(Mbox.root)
+                self.top.title("Action")
+                self.top.geometry("400x200")
+                frm = tki.Frame(self.top, borderwidth=4, relief='ridge')
+                frm.pack(fill='both', expand=True)
+
+                label = tki.Label(frm, text="Quelle action voulez-vous réaliser ?")
+                label.pack(padx=4, pady=4)
+
+                self.valider = ImageTk.PhotoImage(file="img/checked.png")
+                self.refuse = ImageTk.PhotoImage(file="img/remove.png")
+
+                b_submit = tki.Button(frm, image=self.valider)
+                b_submit['command'] = lambda: self.accepter(id_echange)
+                b_submit.place(x=100, y=50)
+
+
+                b_cancel = tki.Button(frm, image=self.refuse)
+                b_cancel['command'] = lambda: self.refuser(id_echange)
+                b_cancel.place(x=250, y=50)
+
+                regarderCave = tki.Button(frm, text="Regarder la Cave de l'utilisateur")
+                regarderCave['command'] = lambda: self.visiterCave(id_user, pseudo)
+                regarderCave.place(x=105, y=120)
+
+            def accepter(self, id_echange):
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
+
+                m = {"fonction": "accept_echange", "paramètres": [id_echange]}
+                data = json.dumps(m)
+
+                s.sendall(bytes(data, encoding="utf-8"))
+
+                r = s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+                print(data)
+                self.top.destroy()
+
+            def visiterCave(self, id_user, id_vin):
+                print("modifier")
+                self.top.destroy()
+
+            def refuser(self, id_echange):
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
+
+                m = {"fonction": "refuse_echange", "paramètres": [id_echange]}
+                data = json.dumps(m)
+
+                s.sendall(bytes(data, encoding="utf-8"))
+
+                r = s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+                print(data)
+                self.top.destroy()
+        
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            msg = clicker(id_user, self.tableau.item(curItem)["values"][1])
+            msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3])
 
         #Tableau
 
@@ -118,15 +170,15 @@ class PageMesDemandes(tk.Frame):
         for d in self.data:
             if (d["Reponse"] == 0):
                 self.tableau.insert('', 'end', values=(
-               "Pas encore répondu", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]))
+               "Pas encore répondu", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"], d["id"]))
             else:
                 if (d["Echange"] == 1):
                     self.check = tk.PhotoImage(file="img/checked.png")
                     self.tableau.insert(parent='', index='end', values=(
-                    "accepté", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]),tags=('accept',))
+                    "accepté", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"], d["id"]),tags=('accept',))
                 else:
                     self.tableau.insert('', 'end', values=(
-                        "refusé", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]), tags=('refuse',))
+                        "refusé", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"], d["id"]), tags=('refuse',))
         self.tableau.bind('<Double-1>', selectItem)
 
         #for d in self.data:

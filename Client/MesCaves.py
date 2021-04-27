@@ -170,29 +170,6 @@ class MesCaves(tk.Frame):
         self.tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
         for d in self.data:
-
-            if(d["Image"] != None):
-                byte =  d["Image"].encode('utf-8')
-                #print(byte)
-                t = base64.b64decode(byte)
-
-                # img = base64.decodebytes(byte)
-                #image_string = StringIO(d["Image"])
-                #img = Image.open(t)
-
-
-                #print(img)
-                #b = image.save(b, format="JPEG")
-
-                image = ImageTk.PhotoImage(data=t)
-                #buttonHome = tk.Button(can, image=image,command=lambda: controller.show_frame("PageAccueil", [id_user]))
-                #buttonHome.place(x=200, y=5)
-                #tableau.insert('', 'end',  text="", image=image,  values=(
-               #d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-            else:
-                self.tableau.insert('', 'end', values=(
-                    d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],d["Echangeable"]))
-        for d in self.data:
             self.tableau.insert('', 'end', values=(
             d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
         for d in self.data:

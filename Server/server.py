@@ -177,15 +177,48 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, Image, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
+        query = ("SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
 
         try:
             tab = []
             cursor.execute(query, (id_utilisateur,))
-            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, Image, label) in cursor:
+            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label) in cursor:
                  tab.append(
-                     {"Nom": Nom, "Type": Type,"Notation": Notation, "Echangeable": Echangeable, "Année": Année, "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
+                     {"Nom": Nom, "Type": Type,"Notation": Notation, "Echangeable": Echangeable, "Année": Année, "Quantité": Quantité, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+    def get_vin(self, id_utilisateur, id_Vin):
+
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE cave.Id_Personne = %s AND vin.Id_Vin = %s;")
+
+        try:
+            tab = []
+            print("ici")
+            cursor.execute(query, (id_utilisateur,id_Vin))
+            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label) in cursor:
+                print("la")
+                tab.append(
+                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
+                     "Quantité": Quantité, "Image": "Image", "label": label, "Id": Id_Vin})
+            self.retour = {"status": 200, "valeurs": tab}
+            print(self.retour)
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -301,6 +334,78 @@ class ClientThread(threading.Thread):
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
 
+    def supprimer_vin(self, id_user, id_vin):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "DELETE vin FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
+
+        try:
+            cursor.execute(query, (id_user, id_vin))
+            self.retour = {"status": 200, "valeurs": True}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+    def incrementer_quantite(self, id_user, id_vin):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantité = (SELECT quantité FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+
+        try:
+            cursor.execute(query, (id_user, id_vin, id_user, id_vin))
+            self.retour = {"status": 200, "valeurs": True}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+    def decrementer_quantite(self, id_user, id_vin):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantité = (SELECT quantité FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)-1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+
+        try:
+            cursor.execute(query, (id_user, id_vin, id_user, id_vin))
+            self.retour = {"status": 200, "valeurs": True}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
     def get_random_id(self):
         mydb = mysql.connector.connect(
             host="localhost",
@@ -376,6 +481,52 @@ class ClientThread(threading.Thread):
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
+    def accept_echange(self, id_echange):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "Update Echange SET reponse = True, accept = True, Date_reponse = NOW() WHERE Id_Echange = %s;")
+
+        try:
+            cursor.execute(query, (id_echange,))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+    def refuse_echange(self, id_echange):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "Update Echange SET reponse = True, accept = False, Date_reponse = NOW() WHERE Id_Echange = %s;")
+
+        try:
+            cursor.execute(query, (id_echange,))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
     def get_random_id(self):
         mydb = mysql.connector.connect(
             host="localhost",
@@ -411,15 +562,15 @@ class ClientThread(threading.Thread):
         print("ici")
         cursor = mydb.cursor()
         query = (
-            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
+            "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
             "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE id_Recepteur = %s")
 
         try:
             cursor.execute(query, (id_user,))
             tab = []
-            for (accept, Pseudo, Nom, Nomv, Date_demande, reponse) in cursor:
+            for (Id_Echange,accept, Pseudo, Nom, Nomv, Date_demande, reponse) in cursor:
                 tab.append(
-                    {"Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv, "Nom_vin_demandeur": Nom, "Date_demande": Date_demande, "Reponse": reponse})
+                    {"id": Id_Echange,"Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv, "Nom_vin_demandeur": Nom, "Date_demande": Date_demande, "Reponse": reponse})
             self.retour = {"status": 200, "valeurs": tab}
             print(self.retour)
         except mysql.connector.Error as err:
@@ -510,11 +661,24 @@ class ClientThread(threading.Thread):
             self.get_demandeRecu(test['paramètres'][0])
         elif (test['fonction'] == 'get_demandeEnvoye'):
             self.get_demandeEnvoye(test['paramètres'][0])
+        elif(test['fonction'] == 'supprimer_vin'):
+            self.supprimer_vin(test['paramètres'][0], test['paramètres'][1])
+        elif (test['fonction'] == 'incrementer_quantite'):
+            self.incrementer_quantite(test['paramètres'][0], test['paramètres'][1])
+        elif (test['fonction'] == 'decrementer_quantite'):
+            self.decrementer_quantite(test['paramètres'][0], test['paramètres'][1])
+        elif(test['fonction'] == 'get_vin'):
+            self.get_vin(test['paramètres'][0], test['paramètres'][1])
+        elif(test['fonction'] == "accept_echange"):
+            self.accept_echange(test['paramètres'][0])
+        elif (test['fonction'] == "refuse_echange"):
+            self.refuse_echange(test['paramètres'][0])
+
         #for v in r :
          #   print(v)
 
         self.retour = json.dumps(self.retour)
-        self.clientsocket.send(bytes(self.retour,encoding="utf-8"))
+        self.clientsocket.send(bytes(self.retour, encoding="utf-8"))
 
         print("Client déconnecté...")
 

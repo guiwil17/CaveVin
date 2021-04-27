@@ -67,19 +67,7 @@ class PageMesDemandesEnvoyes(tk.Frame):
         style = Style()
         style.map('Treeview', foreground=fixed_map('foreground'), background=fixed_map('background'))
 
-        def popup_bonus():
-            win = tk.Toplevel()
-            win.wm_title("Window")
-
-            l = tk.Label(win, text="Input")
-            l.grid(row=0, column=0)
-
-            b = ttk.Button(win, text="Okay", command=win.destroy)
-            b.grid(row=1, column=0)
-
-        def popup_showinfo():
-            showinfo("Window", "Hello World!")
-
+    
         #Tableau
         self.tableau = Treeview(can, columns=('','Vin demandé', 'Mon vin', 'Receveur', 'Date de la demande'))
         self.tableau.pack(padx=147, pady=180)
