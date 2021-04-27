@@ -8,6 +8,9 @@ import PageAccueil
 import PageConnexion
 import PageInscription
 import MesCaves
+import VisiterCaves
+import DemanderEchange
+import ModifierVin
 import PageMesDemandes
 import PageMesDemandesEnvoyes
 
@@ -40,7 +43,6 @@ class main(tk.Tk):
             frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif(name == "PageAccueil"):
-            print(param[0])
             frame = PageAccueil.PageAccueil(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageRecherche"):
@@ -54,6 +56,15 @@ class main(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageInscription"):
             frame = PageInscription.PageInscription(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "VisiterCaves"):
+            frame = VisiterCaves.VisiterCaves(self.container, self, param[0], param[1])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif(name == "DemanderEchange"):
+            frame = DemanderEchange.DemanderEchange(self.container, self, param[0], param[1], param[2])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "ModifierVin"):
+            frame = ModifierVin.ModifierVin(self.container, self, param[0], param[1])
             frame.grid(row=0, column=0, sticky="nsew")
         elif(name ==  "PageMesDemandes"):
             frame = PageMesDemandes.PageMesDemandes(self.container, self, param[0])
