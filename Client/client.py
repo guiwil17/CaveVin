@@ -14,6 +14,7 @@ import ModifierVin
 import PageMesDemandes
 import PageMesDemandesEnvoyes
 import PageAdmin
+import VisiterCavesAdmin
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -75,6 +76,9 @@ class main(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageAccueil" and param[0]==1):
             frame = PageAdmin.PageAdmin(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif (name == "VisiterCavesAdmin"):
+            frame = VisiterCavesAdmin.VisiterCavesAdmin(self.container, self, param[0], param[1])
             frame.grid(row=0, column=0, sticky="nsew")
 
 

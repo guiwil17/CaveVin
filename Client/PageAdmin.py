@@ -88,9 +88,17 @@ class PageAdmin(tk.Frame):
                 label = tki.Label(frm, text="Quelle action voulez-vous réaliser ?")
                 label.pack(padx=4, pady=4)
 
+                b_modifier = tki.Button(frm, text='Voir les Vins')
+                b_modifier['command'] = lambda: self.modifier(id_user)
+                b_modifier.pack()
+
                 b_delete = tki.Button(frm, text='Supprimer')
                 b_delete['command'] = lambda: self.supprimer(id_user)
                 b_delete.pack(padx=4, pady=4)
+
+            def modifier(self, id_user):
+                controller.show_frame("VisiterCavesAdmin", [1, id_user])
+                self.top.destroy()
 
             def supprimer(self, id_user):
                 self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
