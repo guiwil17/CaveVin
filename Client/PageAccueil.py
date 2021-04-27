@@ -9,6 +9,7 @@ import PageConnexion
 import PageInscription
 import MesCaves
 import Pages
+import PageConnexion
 from PIL import Image, ImageTk
 
 class PageAccueil(tk.Frame):
@@ -20,9 +21,11 @@ class PageAccueil(tk.Frame):
         tk.Frame.__init__(self, parent)
         can = tk.Canvas(self, width=1200, height=800)
         self.img = ImageTk.PhotoImage(file="img/accueil.jpg")
+        self.logout = ImageTk.PhotoImage(file="img/logout.png")
         can.create_image(0, 0, anchor=tk.NW, image=self.img)
         can.place(x=0, y=0)
-
+        buttonLogout = tk.Button(can, image=self.logout, command=lambda: controller.show_frame("PageConnexion"))
+        buttonLogout.place(x=5, y=5)
         can.create_text(630, 200, text="Accueil", font=("Montserrat", 38, "bold"), fill="white")
 
         button1 = tk.Button(can, text="Mes Caves", padx=59, font=("Montserrat", 18, "bold"), pady=10, bg="#AC1E44",

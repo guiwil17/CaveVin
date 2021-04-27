@@ -67,7 +67,6 @@ class PageMesDemandesEnvoyes(tk.Frame):
         style = Style()
         style.map('Treeview', foreground=fixed_map('foreground'), background=fixed_map('background'))
 
-    
         #Tableau
         self.tableau = Treeview(can, columns=('','Vin demandé', 'Mon vin', 'Receveur', 'Date de la demande'))
         self.tableau.pack(padx=147, pady=180)
@@ -103,7 +102,7 @@ class PageMesDemandesEnvoyes(tk.Frame):
                         "En attente de réponse", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]))
                 else:
 
-                    if(d["Echange"] == 0):
+                    if(d["Echange"] == 1):
                         self.tableau.insert('', 'end', values=("accepté",d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]), tags = ('accept',))
                     else:
                         self.tableau.insert('', 'end', values=("refusé",d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]), tags = ('refuse',))
