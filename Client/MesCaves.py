@@ -249,12 +249,12 @@ class MesCaves(tk.Frame):
                 self.top.destroy()
 
         def selectItem(a):
-            curItem = tableau.focus()
-            msg = Mbox(id_user, tableau.item(curItem)["values"][8], tableau.item(curItem)["values"][6])
+            curItem = self.tableau.focus()
+            msg = Mbox(id_user, self.tableau.item(curItem)["values"][8], self.tableau.item(curItem)["values"][6])
 
         def refresh():
             data = recupVins()
-            self.tableau.delete(*tableau.get_children())
+            self.tableau.delete(*self.tableau.get_children())
             for d in data:
                 self.tableau.insert('', 'end', values=(
                     d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
@@ -263,7 +263,9 @@ class MesCaves(tk.Frame):
            
         for d in self.data:
             self.tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
+                    d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                    ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
+        self.tableau.bind('<Double-1>', selectItem)
 
 
 
