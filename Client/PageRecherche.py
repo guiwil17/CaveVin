@@ -1,7 +1,6 @@
 import tkinter.filedialog
 import tkinter as tk
 from PIL import Image, ImageTk
-import Pages
 import PageAccueil
 import socket
 import json
@@ -22,16 +21,16 @@ class PageRecherche(tk.Frame):
         fonts = ("Time New Roman", 18, "bold")
         fonts2 = ("Time New Roman", 16)
 
-        can.create_text(600, 80, text="Rechercher une Cave", font=titre, fill="white")
+        can.create_text(610, 80, text="Rechercher une Cave", font=titre, fill="white")
 
         self.imgHome = tk.PhotoImage(file="img/home.png")
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user] ))
         buttonHome.place(x=5,y=5)
 
-        can.create_text(450, 260, text="Pseudo du propriétaire", font=fonts, fill="white")
+        can.create_text(330, 265, text="Pseudo du propriétaire", font=fonts, fill="white")
 
         self.entryPseudo = tk.Entry(can,  font=fonts, bg="white", fg="black", justify="center")
-        self.entryPseudo.place(x=700, y=250)
+        self.entryPseudo.place(x=480, y=250)
         def recherche():
             entryPseudo = self.entryPseudo.get()
 
@@ -72,9 +71,9 @@ class PageRecherche(tk.Frame):
                 random()
         buttonRecherche = tk.Button(can, text="Rechercher", padx=23, font=fonts2, pady=0, bg="#AC1E44",
                                  fg="white", command=recherche)
-        buttonRecherche.place(x=550, y=400)
+        buttonRecherche.place(x=515, y=400)
 
         buttonAleatoire = tk.Button(can, text="Cave Aléatoire", padx=10, font=fonts2, pady=0,
                                  bg="#AC1E44", fg="white", command=random)
-        buttonAleatoire.place(x=550, y=470)
+        buttonAleatoire.place(x=515, y=470)
 

@@ -1,7 +1,6 @@
 import tkinter.filedialog
 import tkinter as tk
 from PIL import Image, ImageTk
-import Pages
 import PageAccueil
 import socket
 import json

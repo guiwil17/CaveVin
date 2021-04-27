@@ -1,6 +1,5 @@
 import tkinter.filedialog
 import tkinter as tk
-
 import PageAjouterCave
 import PageAjouterVin
 import PageRecherche
@@ -44,7 +43,7 @@ class main(tk.Tk):
         elif (name == "MesCaves"):
             frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
-        elif(name == "PageAccueil" and param == None):
+        elif(name == "PageAccueil" and param[0] != 1):
             frame = PageAccueil.PageAccueil(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageRecherche"):

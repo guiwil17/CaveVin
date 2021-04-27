@@ -3,7 +3,6 @@ from tkinter.ttk import *
 import socket
 import json
 import PageAccueil
-import Pages
 from PIL import Image, ImageTk
 import io
 

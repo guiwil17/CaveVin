@@ -4,7 +4,6 @@ from tkinter.ttk import *
 import socket
 import json
 import PageAccueil
-import Pages
 from PIL import Image, ImageTk
 import PageAjouterVin
 import PageAjouterCave
@@ -124,7 +123,7 @@ class DemanderEchange(tk.Frame):
                 ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
        
-        can.create_text(560, 40, text="Choisissez votre vin proposé", font=titre, fill="white")
+        can.create_text(620, 80, text="Choisissez votre vin proposé", font=titre, fill="white")
 
         #Filtre
         can.create_text(50, 160, text="Filtre", font=titre2, fill="white")

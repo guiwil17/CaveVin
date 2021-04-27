@@ -8,7 +8,6 @@ import PageRecherche
 import PageConnexion
 import PageInscription
 import MesCaves
-import Pages
 import PageConnexion
 from PIL import Image, ImageTk
 
