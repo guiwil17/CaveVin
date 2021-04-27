@@ -42,7 +42,7 @@ class PageAdmin(tk.Frame):
         style = Style(can)
         style.configure('Treeview', rowheight=50)
 
-        self.imgHome = tk.PhotoImage(file="img/home.png")
+        self.imgHome = tk.PhotoImage(file="img/logout.png")
 
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageConnexion"))
         buttonHome.place(x=5, y=5)
