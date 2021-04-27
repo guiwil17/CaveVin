@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3ffa49e-1048-4147-974e-58bbf12e1b86" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/MesCaves.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/MesCaves.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAccueil.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAccueil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAjouterCave.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterCave.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageAjouterVin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageAjouterVin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageConnexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageConnexion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageInscription.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageInscription.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/PageRecherche.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/PageRecherche.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +34,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.client">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Mywine" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -200,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619194048411</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Ajout pages échanges">
+      <created>1619507043859</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1619507043859</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -228,7 +226,8 @@
     <MESSAGE value="Modification affichage pageRecherche" />
     <MESSAGE value="Modif ajout vin" />
     <MESSAGE value="ça marche !!!!!!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="ça marche !!!!!!!!" />
+    <MESSAGE value="Ajout pages échanges" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout pages échanges" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="-46" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619102138199">
@@ -236,39 +235,40 @@
     </state>
     <state x="-1506" y="-46" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619102138199" />
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619017089511" />
-    <state x="587" y="88" key="CommitChangelistDialog2" timestamp="1619194047498">
+    <state x="587" y="88" key="CommitChangelistDialog2" timestamp="1619507043182">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-1333" y="-133" key="CommitChangelistDialog2/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619175354715" />
-    <state x="587" y="88" key="CommitChangelistDialog2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194047498" />
+    <state x="587" y="88" key="CommitChangelistDialog2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507043182" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1619166853313">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619166853313" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1619159952939">
+    <state x="-1180" y="54" key="FileChooserDialogImpl" timestamp="1619463144115">
+      <screen x="-1920" y="-221" width="1920" height="1040" />
+    </state>
+    <state x="-1180" y="54" key="FileChooserDialogImpl/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619463144115" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619378437955" />
+    <state width="1899" height="199" key="GridCell.Tab.0.bottom" timestamp="1619507196693">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619159952939" />
-    <state width="1882" height="201" key="GridCell.Tab.0.bottom" timestamp="1619296410348">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
+    <state width="1899" height="199" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619463241623" />
+    <state width="1899" height="199" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507196693" />
+    <state width="1899" height="199" key="GridCell.Tab.0.center" timestamp="1619507196693">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="201" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619296410348" />
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194337807" />
-    <state width="1882" height="201" key="GridCell.Tab.0.center" timestamp="1619296410348">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
+    <state width="1899" height="199" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619463241623" />
+    <state width="1899" height="199" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507196693" />
+    <state width="1899" height="199" key="GridCell.Tab.0.left" timestamp="1619507196693">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="201" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619296410348" />
-    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194337807" />
-    <state width="1882" height="201" key="GridCell.Tab.0.left" timestamp="1619296410348">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
+    <state width="1899" height="199" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619463241623" />
+    <state width="1899" height="199" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507196693" />
+    <state width="1899" height="199" key="GridCell.Tab.0.right" timestamp="1619507196693">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1882" height="201" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619296410348" />
-    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194337807" />
-    <state width="1882" height="201" key="GridCell.Tab.0.right" timestamp="1619296410348">
-      <screen x="-1920" y="-221" width="1920" height="1040" />
-    </state>
-    <state width="1882" height="201" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619296410348" />
-    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194337807" />
+    <state width="1899" height="199" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619463241623" />
+    <state width="1899" height="199" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507196693" />
     <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1619194337807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -297,11 +297,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="747" y="236" key="VCS.ChangeListViewerDialog/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619166776733" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1619194052005">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1619507046515">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-1368" y="32" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.-221.1920.1040@-1920.-221.1920.1040" timestamp="1619175358667" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619194052005" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.-221.1920.1040@0.0.1920.1040" timestamp="1619507046515" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1619017022245">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

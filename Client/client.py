@@ -11,6 +11,8 @@ import MesCaves
 import VisiterCaves
 import DemanderEchange
 import ModifierVin
+import PageMesDemandes
+import PageMesDemandesEnvoyes
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -64,6 +66,13 @@ class main(tk.Tk):
         elif (name == "ModifierVin"):
             frame = ModifierVin.ModifierVin(self.container, self, param[0], param[1])
             frame.grid(row=0, column=0, sticky="nsew")
+        elif(name ==  "PageMesDemandes"):
+            frame = PageMesDemandes.PageMesDemandes(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif(name == "PageMesDemandesEnvoyes"):
+            frame = PageMesDemandesEnvoyes.PageMesDemandesEnvoyes(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+
 
         frame.tkraise()
 
