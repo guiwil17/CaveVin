@@ -50,13 +50,14 @@ CREATE TABLE Vin(
 
 CREATE TABLE Echange(
    Id_Echange INT AUTO_INCREMENT,
-   accept boolean,
+   accept boolean NOT NULL,
    Id_Vin_Recepteur INT NOT NULL,
    Id_Vin_Emmetteur INT NOT NULL,
    Id_Emmetteur INT NOT NULL,
    Id_Recepteur INT NOT NULL,
    Date_demande DATE NOT NULL,
    Date_reponse DATE,
+   reponse boolean NOT NULL,
    PRIMARY KEY(Id_Echange),
    FOREIGN KEY(Id_Vin_Recepteur) REFERENCES Vin(Id_Vin),
    FOREIGN KEY(Id_Vin_Emmetteur) REFERENCES Vin(Id_Vin),
@@ -91,4 +92,19 @@ INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  
 INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Beauséjour (Duffau Lagarosse), Saint Emilion', 'Bordeaux Rouge', '18/20', FALSE, 2002, 2, 3);
 INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', '16/20', TRUE, 2012, 8, 3);
 
+
+
+CREATE TRIGGER `Ajout_user` AFTER INSERT ON `personne`
+ FOR EACH ROW INSERT INTO Cave Values(null, "Maison Principale", NEW.Id_Personne);
+
+CREATE TRIGGER `Ajout_utilisateur` AFTER INSERT ON `personne`
+ FOR EACH ROW INSERT INTO Utilisateur Values(NEW.Id_Personne);
+
+
+INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 1,7,3,1,NOW(), FALSE);
+INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 7,4,2,3,NOW(), FALSE);
+INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 4,2,1,2,NOW(), FALSE);
+
 COMMIT;
+
+

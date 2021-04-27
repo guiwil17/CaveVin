@@ -8,6 +8,9 @@ import PageAccueil
 import PageConnexion
 import PageInscription
 import MesCaves
+import PageMesDemandes
+import PageMesDemandesEnvoyes
+
 LARGE_FONT= ("Verdana", 12)
 
 
@@ -34,7 +37,6 @@ class main(tk.Tk):
             frame = PageConnexion.PageConnexion(self.container, self)
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "MesCaves"):
-            print("ooooooooooooooooooooooh")
             frame = MesCaves.MesCaves(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
         elif(name == "PageAccueil"):
@@ -52,6 +54,12 @@ class main(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         elif (name == "PageInscription"):
             frame = PageInscription.PageInscription(self.container, self)
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif(name ==  "PageMesDemandes"):
+            frame = PageMesDemandes.PageMesDemandes(self.container, self, param[0])
+            frame.grid(row=0, column=0, sticky="nsew")
+        elif(name == "PageMesDemandesEnvoyes"):
+            frame = PageMesDemandesEnvoyes.PageMesDemandesEnvoyes(self.container, self, param[0])
             frame.grid(row=0, column=0, sticky="nsew")
 
 

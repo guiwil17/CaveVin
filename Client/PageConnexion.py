@@ -17,7 +17,6 @@ class PageConnexion(tk.Frame, Pages.Pages):
             entryUser = self.entryUser.get()
             password = self.entryPass.get()
             password_hash = hashlib.sha256(password.encode()).hexdigest()
-
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
 
@@ -25,11 +24,11 @@ class PageConnexion(tk.Frame, Pages.Pages):
             data = json.dumps(m)
 
             s.sendall(bytes(data, encoding="utf-8"))
+            print(s.gettimeout())
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
-            print(self.focus_get())
             if(data["status"] == 200 and data["valeurs"]):
                 controller.show_frame("PageAccueil", [data["valeurs"]])
 
