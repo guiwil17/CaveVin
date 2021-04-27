@@ -126,13 +126,11 @@ class VisiterCaves(tk.Frame):
 
         def selectItem(a):
             curItem = tableau.focus()
-            if(tableau.item(curItem)["values"][7]=="Demande d'échange (double clic)"):
+            if(tableau.item(curItem)["values"][7]=="Oui"):
                 controller.show_frame("DemanderEchange", [int(id_user), int(id_user_visite), int(tableau.item(curItem)["values"][8])])
 
 
         for d in data:
-            buttonEchange = tk.Button(can, image=self.imgEmailReceive,
-                                          command=lambda: controller.show_frame("PageAccueil", [id_user]))
             tableau.insert('', 'end', values=(
             d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
             tableau.bind('<Double-1>', selectItem)
