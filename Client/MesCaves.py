@@ -112,7 +112,7 @@ class MesCaves(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in self.data:
                 self.tableau.insert('', 'end', values=(
-                    d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
+                    d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
                     d["Echangeable"]))
         #Filtre
 
@@ -136,7 +136,7 @@ class MesCaves(tk.Frame):
 
         #Tableau
 
-        self.tableau = Treeview(can, columns=('','Nom', 'Type', 'Année', 'Cave', 'Commentaire', 'Quantité', 'Echangeable'))
+        self.tableau = Treeview(can, columns=('Nom', 'Type', 'Année', 'Cave', 'Commentaire', 'Quantité', 'Echangeable'))
         self.tableau.pack(padx=10, pady=180)
 
         vsb = Scrollbar(can, orient="vertical", command=self.tableau.yview)
@@ -146,14 +146,13 @@ class MesCaves(tk.Frame):
         vsb.place(x=1180, y=180, height=527)
 
 
-        self.tableau.column('',  width=100, stretch=tk.NO, anchor='center')
         self.tableau.column('Nom', width=200, stretch=tk.NO, anchor='center')
         self.tableau.column('Type', width=200, stretch=tk.NO, anchor='center')
         self.tableau.column('Année', width=100, stretch=tk.NO, anchor='center')
         self.tableau.column('Commentaire', width=300, stretch=tk.NO, anchor='center')
         self.tableau.column('Cave', width=120, stretch=tk.NO, anchor='center')
         self.tableau.column('Quantité', width=100, stretch=tk.NO, anchor='center')
-        self.tableau.column('Echangeable', width=50, stretch=tk.NO, anchor='center')
+        self.tableau.column('Echangeable', width=200, stretch=tk.NO, anchor='center')
 
         self.tableau.heading('Nom', text='Nom')
 
@@ -165,14 +164,13 @@ class MesCaves(tk.Frame):
         self.tableau.heading('Quantité', text='Quantité')
         self.tableau.heading('Echangeable', text='')
 
+        self.tableau['show'] = 'headings'
+
         class Mbox(object):
 
             root = None
 
             def __init__(self,id_user, id_vin, quantite):
-
-
-
                 tki = tkinter
                 self.top = tki.Toplevel(Mbox.root)
                 self.quantite = quantite
@@ -250,20 +248,20 @@ class MesCaves(tk.Frame):
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            msg = Mbox(id_user, self.tableau.item(curItem)["values"][8], self.tableau.item(curItem)["values"][6])
+            msg = Mbox(id_user, self.tableau.item(curItem)["values"][7], self.tableau.item(curItem)["values"][5])
 
         def refresh():
             data = recupVins()
             self.tableau.delete(*self.tableau.get_children())
             for d in data:
                 self.tableau.insert('', 'end', values=(
-                    d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
            
         for d in self.data:
             self.tableau.insert('', 'end', values=(
-                    d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
         self.tableau.bind('<Double-1>', selectItem)
 

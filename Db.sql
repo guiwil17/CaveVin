@@ -17,13 +17,14 @@ CREATE TABLE Personne(
 CREATE TABLE Administrateur(
    Id_Personne INT,
    PRIMARY KEY(Id_Personne),
-   FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne)
+   FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne) ON DELETE CASCADE
+
 );
 
 CREATE TABLE Utilisateur(
    Id_Personne INT,
    PRIMARY KEY(Id_Personne),
-   FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne)
+   FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne) ON DELETE CASCADE
 );
 
 CREATE TABLE Cave(
@@ -31,7 +32,7 @@ CREATE TABLE Cave(
    label VARCHAR(50),
    Id_Personne INT NOT NULL,
    PRIMARY KEY(Id_Cave),
-   FOREIGN KEY(Id_Personne) REFERENCES Utilisateur(Id_Personne)
+   FOREIGN KEY(Id_Personne) REFERENCES Utilisateur(Id_Personne) ON DELETE CASCADE
 );
 
 CREATE TABLE Vin(
@@ -45,7 +46,7 @@ CREATE TABLE Vin(
    Id_Cave INT NOT NULL,
    Image LONGTEXT,
    PRIMARY KEY(Id_Vin),
-   FOREIGN KEY(Id_Cave) REFERENCES Cave(Id_Cave)
+   FOREIGN KEY(Id_Cave) REFERENCES Cave(Id_Cave) ON DELETE CASCADE
 );
 
 CREATE TABLE Echange(
@@ -59,10 +60,10 @@ CREATE TABLE Echange(
    Date_reponse DATE,
    reponse boolean NOT NULL,
    PRIMARY KEY(Id_Echange),
-   FOREIGN KEY(Id_Vin_Recepteur) REFERENCES Vin(Id_Vin),
-   FOREIGN KEY(Id_Vin_Emmetteur) REFERENCES Vin(Id_Vin),
-   FOREIGN KEY(Id_Emmetteur) REFERENCES Utilisateur(Id_Personne),
-   FOREIGN KEY(Id_Recepteur) REFERENCES Utilisateur(Id_Personne)
+   FOREIGN KEY(Id_Vin_Recepteur) REFERENCES Vin(Id_Vin) ON DELETE CASCADE,
+   FOREIGN KEY(Id_Vin_Emmetteur) REFERENCES Vin(Id_Vin) ON DELETE CASCADE,
+   FOREIGN KEY(Id_Emmetteur) REFERENCES Utilisateur(Id_Personne) ON DELETE CASCADE,
+   FOREIGN KEY(Id_Recepteur) REFERENCES Utilisateur(Id_Personne) ON DELETE CASCADE
 );
 
 START TRANSACTION;

@@ -113,6 +113,7 @@ class PageMesDemandes(tk.Frame):
                 r = r.decode("utf-8")
                 data = json.loads(r)
                 print(data)
+                mise_a_jour()
                 self.top.destroy()
 
             def visiterCave(self, id_user, id_vin):
@@ -132,6 +133,7 @@ class PageMesDemandes(tk.Frame):
                 r = r.decode("utf-8")
                 data = json.loads(r)
                 print(data)
+                mise_a_jour()
                 self.top.destroy()
         
 
@@ -140,6 +142,25 @@ class PageMesDemandes(tk.Frame):
             if(self.tableau.item(curItem)["values"][0] == "Pas encore répondu"):
                 msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3])
 
+        def mise_a_jour():
+            self.data = recupDemandes()
+            self.tableau.delete(*self.tableau.get_children())
+            for d in self.data:
+                if (d["Reponse"] == 0):
+                    self.tableau.insert('', 'end', values=(
+                        "Pas encore répondu", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"],
+                        d["Date_demande"], d["id"]))
+                else:
+                    if (d["Echange"] == 1):
+                        self.check = tk.PhotoImage(file="img/checked.png")
+                        self.tableau.insert(parent='', index='end', values=(
+                            "accepté", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"],
+                            d["id"]), tags=('accept',))
+                    else:
+                        self.tableau.insert('', 'end', values=(
+                            "refusé", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"],
+                            d["id"]), tags=('refuse',))
+            self.tableau.bind('<Double-1>', selectItem)
         #Tableau
 
         self.tableau = Treeview(can, columns=('','Mon vin', 'Vin proposé', 'Demandeur', 'Date de la demande'))
