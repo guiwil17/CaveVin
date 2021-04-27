@@ -109,8 +109,8 @@ class VisiterCaves(tk.Frame):
         tableau.column('Année', width=100, stretch=tk.NO, anchor='center')
         tableau.column('Commentaire', width=300, stretch=tk.NO, anchor='center')
         tableau.column('Cave', width=120, stretch=tk.NO, anchor='center')
-        tableau.column('Quantité', width=100, stretch=tk.NO, anchor='center')
-        tableau.column('Echangeable', width=50, stretch=tk.NO, anchor='center')
+        tableau.column('Quantité', width=80, stretch=tk.NO, anchor='center')
+        tableau.column('Echangeable', width=70, stretch=tk.NO, anchor='center')
 
         tableau.heading('Nom', text='Nom')
 
@@ -120,23 +120,10 @@ class VisiterCaves(tk.Frame):
         tableau.heading('Commentaire', text='Commentaire')
         tableau.heading('Cave', text='Cave')
         tableau.heading('Quantité', text='Quantité')
-        tableau.heading('Echangeable', text='')
+        tableau.heading('Echangeable', text='Echangeable')
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
-       # for d in data:
-
-            #if(d["Image"] != None):
-            #    byte =  d["Image"].encode('utf-8')
-             #   print(byte)
-             #   #img = base64.decodebytes(byte)
-             #   image = tk.PhotoImage(data=byte)
-             #   tableau.insert('', 'end',  text="",image=image,  values=(
-             #  d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-           # else:
-           #     tableau.insert('', 'end', values=(
-            #        d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
-            #        d["Echangeable"]))
         def selectItem(a):
             curItem = tableau.focus()
             if(tableau.item(curItem)["values"][7]=="Demande d'échange (double clic)"):
@@ -147,5 +134,5 @@ class VisiterCaves(tk.Frame):
             buttonEchange = tk.Button(can, image=self.imgEmailReceive,
                                           command=lambda: controller.show_frame("PageAccueil", [id_user]))
             tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Demande d'échange (double clic)" if d["Echangeable"]==1  else "Non échangeable"), d["Id"]))
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
             tableau.bind('<Double-1>', selectItem)

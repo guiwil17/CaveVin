@@ -101,63 +101,120 @@ class MesCaves(tk.Frame):
         tableau.column('Année', width=100, stretch=tk.NO, anchor='center')
         tableau.column('Commentaire', width=300, stretch=tk.NO, anchor='center')
         tableau.column('Cave', width=120, stretch=tk.NO, anchor='center')
-        tableau.column('Quantité', width=100, stretch=tk.NO, anchor='center')
-        tableau.column('Echangeable', width=50, stretch=tk.NO, anchor='center')
+        tableau.column('Quantité', width=80, stretch=tk.NO, anchor='center')
+        tableau.column('Echangeable', width=70, stretch=tk.NO, anchor='center')
 
         tableau.heading('Nom', text='Nom')
 
         tableau.heading('Type', text='Type')
 
         tableau.heading('Année', text='Année')
-        tableau.heading('Commentaire', text='Commentaire')
         tableau.heading('Cave', text='Cave')
+        tableau.heading('Commentaire', text='Commentaire')
         tableau.heading('Quantité', text='Quantité')
-        tableau.heading('Echangeable', text='')
+        tableau.heading('Echangeable', text='Echangeable')
 
         tableau['show'] = 'headings'  # sans ceci, il y avait une colonne vide à gauche qui a pour rôle d'afficher le paramètre "text" qui peut être spécifié lors du insert
 
-       # for d in data:
+        class Mbox(object):
 
-            #if(d["Image"] != None):
-            #    byte =  d["Image"].encode('utf-8')
-             #   print(byte)
-             #   #img = base64.decodebytes(byte)
-             #   image = tk.PhotoImage(data=byte)
-             #   tableau.insert('', 'end',  text="",image=image,  values=(
-             #  d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-           # else:
-           #     tableau.insert('', 'end', values=(
-            #        d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
-            #        d["Echangeable"]))
-        def modifier(a, id_user, id_vin):
-            print("modifier")
-            print(id_user, id_vin)
+            root = None
 
-        def supprimer(a, id_user, id_vin):
-            print("supprimer")
-            print(id_user, id_vin)
+            def __init__(self,id_user, id_vin, quantite):
 
-        def clicker(id_user, id_vin):
-            global pop
-            pop = tk.Toplevel(controller)
-            pop.title("Action")
-            pop.geometry("250x150")
-            pop.config(bg="white")
-            pop.grab_set()
-            modifierPopup = tk.Button(pop, text="Modifier")
-            modifierPopup.place(x=50, y=20)
-            modifierPopup.bind('<Button-1>', modifier(self, id_user, id_vin))
-            supprimerPopup = tk.Button(pop, text="Supprimer")
-            supprimerPopup.place(x=150, y=20)
-            modifierPopup.bind('<Button-1>', supprimer(self, id_user, id_vin))
+
+
+                tki = tkinter
+                self.top = tki.Toplevel(Mbox.root)
+                self.quantite = quantite
+                self.top.title("Action")
+                frm = tki.Frame(self.top, borderwidth=4, relief='ridge')
+                frm.pack(fill='both', expand=True)
+
+                label = tki.Label(frm, text="Quelle action voulez-vous réaliser ?")
+                label.pack(padx=4, pady=4)
+
+                b_modifier = tki.Button(frm, text='Modifier le Vin')
+                b_modifier['command'] = lambda: self.modifier(id_user, id_vin)
+                b_modifier.pack()
+
+                self.label_quantite = tki.Label(frm, text = 'Quantité : '+str(self.quantite))
+                self.label_quantite.pack()
+
+                b_increm = tki.Button(frm, text='Augmenter quantité')
+                b_increm['command'] = lambda: self.increm(id_user, id_vin, self.quantite)
+                b_increm.pack()
+
+                b_decrem = tki.Button(frm, text='Diminuer quantité')
+                b_decrem['command'] = lambda: self.decrem(id_user, id_vin, self.quantite)
+                b_decrem.pack()
+
+
+
+                b_delete = tki.Button(frm, text='Supprimer')
+                b_delete['command'] = lambda: self.supprimer(id_user, id_vin)
+                b_delete.pack(padx=4, pady=4)
+
+            def decrem(self, id_user, id_vin, quantite):
+                if(self.quantite>0):
+                    self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    self.s.connect(("93.7.175.167", 1111))
+                    self.quantite=quantite-1
+                    self.label_quantite["text"] = "Quantité : "+str(self.quantite)
+                    m = {"fonction": "decrementer_quantite", "paramètres": [id_user, id_vin]}
+                    data = json.dumps(m)
+
+                    self.s.sendall(bytes(data, encoding="utf-8"))
+
+
+                    refresh()
+
+            def increm(self, id_user, id_vin, quantite):
+                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.s.connect(("93.7.175.167", 1111))
+                self.quantite = quantite + 1
+                self.label_quantite["text"] = "Quantité : " + str(self.quantite)
+                m = {"fonction": "incrementer_quantite", "paramètres": [id_user, id_vin]}
+                data = json.dumps(m)
+
+                self.s.sendall(bytes(data, encoding="utf-8"))
+
+
+                refresh()
+
+            def modifier(self, id_user, id_vin):
+                print("modifier")
+                controller.show_frame("ModifierVin", [id_user, id_vin])
+                self.top.destroy()
+
+            def supprimer(self, id_user, id_vin):
+                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.s.connect(("93.7.175.167", 1111))
+                m = {"fonction": "supprimer_vin", "paramètres": [id_user, id_vin]}
+                data = json.dumps(m)
+                self.s.sendall(bytes(data, encoding="utf-8"))
+                r = self.s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+                refresh()
+                self.top.destroy()
 
         def selectItem(a):
             curItem = tableau.focus()
-            msg = clicker(id_user, tableau.item(curItem)["values"][8])
+            msg = Mbox(id_user, tableau.item(curItem)["values"][8], tableau.item(curItem)["values"][6])
+
+        def refresh():
+            data = recupVins()
+            tableau.delete(*tableau.get_children())
+            for d in data:
+                tableau.insert('', 'end', values=(
+                    d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                    ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
+            tableau.bind('<Double-1>', selectItem)
 
         for d in data:
             tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"], d["Id"]))
+            d["Image"], d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
         tableau.bind('<Double-1>', selectItem)
 
 

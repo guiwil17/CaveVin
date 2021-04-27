@@ -10,6 +10,7 @@ import PageInscription
 import MesCaves
 import VisiterCaves
 import DemanderEchange
+import ModifierVin
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -60,7 +61,9 @@ class main(tk.Tk):
         elif(name == "DemanderEchange"):
             frame = DemanderEchange.DemanderEchange(self.container, self, param[0], param[1], param[2])
             frame.grid(row=0, column=0, sticky="nsew")
-
+        elif (name == "ModifierVin"):
+            frame = ModifierVin.ModifierVin(self.container, self, param[0], param[1])
+            frame.grid(row=0, column=0, sticky="nsew")
 
         frame.tkraise()
 

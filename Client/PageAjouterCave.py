@@ -22,6 +22,7 @@ class PageAjouterCave(tk.Frame, Pages.Pages):
             r = r.decode("utf-8")
             data = json.loads(r)
             print(data)
+            controller.show_frame("PageAccueil", id_user)
 
 
         tk.Frame.__init__(self, parent)
