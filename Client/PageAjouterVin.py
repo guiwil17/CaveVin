@@ -36,19 +36,19 @@ class PageAjouterVin(tk.Frame):
 
         buttonPhoto = tk.Button(can, text="Choisir une photo", padx=49, font=("Montserrat", 15), pady=0, bg="#AC1E44",
                                 fg="white", command=choisir_photo)
-        buttonPhoto.place(x=700, y=185)
+        buttonPhoto.place(x=550, y=185)
 
         can.create_text(480, 250, text="Nom", font=("Montserrat", 18, "bold"), fill="white")
         entryNom = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
-        entryNom.place(x=700, y=235)
+        entryNom.place(x=550, y=235)
 
         can.create_text(472, 300, text="Année", font=("Montserrat", 18, "bold"), fill="white")
         entryAnnee = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
-        entryAnnee.place(x=700, y=285)
+        entryAnnee.place(x=550, y=285)
 
         can.create_text(478, 350, text="Type", font=("Montserrat", 18, "bold"), fill="white")
         entryType = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
-        entryType.place(x=700, y=335)
+        entryType.place(x=550, y=335)
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("93.7.175.167", 1111))
@@ -72,7 +72,7 @@ class PageAjouterVin(tk.Frame):
         entryCave["highlightthickness"] = 0
         entryCave["menu"].config(bg="#AC1E44", fg="white", font=12)
         entryCave.pack(side="top")
-        entryCave.place(x=700, y=385)
+        entryCave.place(x=550, y=385)
 
         def callback(*args):
             print("The selected item is {}".format(variable.get()))
@@ -81,18 +81,18 @@ class PageAjouterVin(tk.Frame):
 
         can.create_text(458, 450, text="Quantité", font=("Montserrat", 18, "bold"), fill="white")
         entryQuantity = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
-        entryQuantity.place(x=700, y=435)
+        entryQuantity.place(x=550, y=435)
 
         can.create_text(435, 500, text="Échangeable", font=("Montserrat", 18, "bold"), fill="white")
         self.tradable = tk.BooleanVar()
         self.cb = tk.Checkbutton(self, onvalue=True, offvalue=False,
                                  variable=self.tradable,
                                  )
-        self.cb.place(x=700, y=485)
+        self.cb.place(x=550, y=485)
 
         can.create_text(435, 550, text="Commentaire", font=("Montserrat", 18, "bold"), fill="white")
         entryCommentaire = tk.Text(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", height=3, width=21)
-        entryCommentaire.place(x=700, y=535)
+        entryCommentaire.place(x=550, y=535)
 
         def ajouter_vin():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

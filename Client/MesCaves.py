@@ -59,9 +59,6 @@ class MesCaves(tk.Frame):
 
         titre = ("Time New Roman", 15, "bold")
 
-        button_filtre = tk.Button(can, text="Filtrer")
-        button_filtre.place(x=750, y=150)
-
         button_Ajouter_vin = tk.Button(can,font=titre,text="Ajouter un vin", fg="white", pady=0, bg="#AC1E44", command=lambda: controller.show_frame("PageAjouterVin", [id_user]))
         button_Ajouter_vin.place(x=560, y=40)
 
@@ -111,25 +108,25 @@ class MesCaves(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in self.data:
                 self.tableau.insert('', 'end', values=(
-                    d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
-                    d["Echangeable"]))
+                    d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"],  d["Quantité"],
+                    ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
         #Filtre
 
-        can.create_text(70, 160, text="Filtre", font=titre, fill="white")
+        can.create_text(35, 160, text="Filtre", font=titre, fill="white")
         self.filtreNom = tk.Entry(can, font=("Montserrat", 12, "bold"), width=13, bg="white", fg="black", justify="center")
-        self.filtreNom.place(x=140, y=150)
+        self.filtreNom.place(x=60, y=150)
 
         self.filtreType = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
-        self.filtreType.place(x=320, y=150)
+        self.filtreType.place(x=230, y=150)
 
         self.filtreAnnee = tk.Entry(can, font=("Montserrat", 12, "bold"), width=7, bg="white", fg="black", justify="center")
-        self.filtreAnnee.place(x=520, y=150)
+        self.filtreAnnee.place(x=420, y=150)
 
         self.filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"),  width=9, bg="white", fg="black", justify="center")
-        self.filtreCave.place(x=620, y=150)
+        self.filtreCave.place(x=520, y=150)
 
         button_filtre = tk.Button(can, text="Filtrer", command=filtrage)
-        button_filtre.place(x=750, y=150)
+        button_filtre.place(x=660, y=150)
 
 
 

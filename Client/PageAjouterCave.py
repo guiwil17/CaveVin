@@ -5,7 +5,7 @@ import PageAccueil
 import socket
 import json
 
-class PageAjouterCave(tk.Frame, Pages.Pages):
+class PageAjouterCave(tk.Frame):
     def __init__(self, parent, controller,id_user):
 
         def AjoutCave():

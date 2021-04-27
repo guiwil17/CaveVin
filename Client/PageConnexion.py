@@ -3,13 +3,11 @@ import tkinter as tk
 import hashlib
 import socket
 import json
-import Pages
 from PIL import Image, ImageTk
-
 import PageInscription
 import PageAccueil
 
-class PageConnexion(tk.Frame, Pages.Pages):
+class PageConnexion(tk.Frame):
     def __init__(self, parent, controller):
 
 
