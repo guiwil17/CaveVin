@@ -55,10 +55,10 @@ class MesCaves(tk.Frame):
         button_Ajouter_cave = tk.Button(can, image=self.imgcave, command=lambda: controller.show_frame("PageAjouterCave", [id_user]))
         button_Ajouter_cave.place(x=60, y=5)
 
-        buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame("PageAccueil",[id_user]))
+        buttonMailReceive = tk.Button(can, image=self.imgEmailReceive, command=lambda: controller.show_frame("PageMesDemandes",[id_user]))
         buttonMailReceive.place(x=1150, y=5)
 
-        buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame("PageAccueil",[id_user]))
+        buttonMailSend = tk.Button(can, image=self.imgEmailSend,command=lambda: controller.show_frame("PageMesDemandesEnvoyes",[id_user]))
         buttonMailSend.place(x=1100, y=5)
 
         titre = ("Time New Roman", 15, "bold")

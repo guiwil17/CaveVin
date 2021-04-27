@@ -113,6 +113,30 @@ class ClientThread(threading.Thread):
         mydb.close()
         cursor.close()
 
+    def get_Pseudo(self, id_user):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("SELECT Pseudo FROM Personne WHERE id_Personne = %s;")
+
+        try:
+            cursor.execute(query, (id_user,))
+            for (Pseudo) in cursor:
+                self.retour = {"status": 200, "valeurs": Pseudo[0]}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg }
+        mydb.close()
+        cursor.close()
 
     def get_caves(self, id_utilisateur):
 
@@ -252,6 +276,30 @@ class ClientThread(threading.Thread):
                 print("Message", err.msg)
                 self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
+    def get_id_user (self, pseudo):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("SELECT Utilisateur.Id_Personne FROM Utilisateur JOIN Personne on Utilisateur.Id_Personne = Personne.Id_Personne WHERE Pseudo = %s;")
+        try:
+            cursor.execute(query, (pseudo,))
+            print("la")
+            for (Id_Personne) in cursor:
+                print(Id_Personne)
+                self.retour = {"status": 200, "valeurs": Id_Personne}
+            print("ici")
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
 
     def get_random_id(self):
         mydb = mysql.connector.connect(
@@ -305,6 +353,114 @@ class ClientThread(threading.Thread):
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
 
+    def demande_echange(self, id_user, id_user_visite, id_vin_demande, id_vin_propose):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "INSERT INTO Echange (Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES(null, False, %s, %s, %s, %s, NOW(), FALSE)")
+
+        try:
+            cursor.execute(query, (id_vin_demande, id_vin_propose, id_user, id_user_visite))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+    def get_random_id(self):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "SELECT Utilisateur.Id_Personne, Pseudo FROM utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
+
+        try:
+            cursor.execute(query)
+            for (Id_Personne, Pseudo) in cursor:
+               self.retour = {"status": 200, "valeurs": [Id_Personne,Pseudo]}
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+    def get_demandeRecu(self, id_user):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+        print("ici")
+        cursor = mydb.cursor()
+        query = (
+            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
+            "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE id_Recepteur = %s")
+
+        try:
+            cursor.execute(query, (id_user,))
+            tab = []
+            for (accept, Pseudo, Nom, Nomv, Date_demande, reponse) in cursor:
+                tab.append(
+                    {"Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv, "Nom_vin_demandeur": Nom, "Date_demande": Date_demande, "Reponse": reponse})
+            self.retour = {"status": 200, "valeurs": tab}
+            print(self.retour)
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
+
+    def get_demandeEnvoye(self, id_user):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = (
+            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.id_Recepteur "
+            "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE Id_Emmetteur = %s")
+
+        try:
+            cursor.execute(query, (id_user,))
+            tab = []
+            for (accept, Pseudo, Nom, Nomv, Date_demande,reponse) in cursor:
+                tab.append(
+                    {"Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv, "Nom_vin_demandeur": Nom,
+                     "Date_demande": Date_demande, "Reponse": reponse})
+            self.retour = {"status": 200, "valeurs": tab}
+            print(self.retour)
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+        mydb.close()
+        cursor.close()
 
     def run(self):
 
@@ -344,6 +500,16 @@ class ClientThread(threading.Thread):
             print("ici")
             print(test['paramètres'][1])
             self.get_id_cave(test['paramètres'][0], test['paramètres'][1])
+        elif (test['fonction'] == "get_id_user"):
+            self.get_id_user(test['paramètres'][0])
+        elif(test['fonction'] == 'get_Pseudo'):
+            self.get_Pseudo(test['paramètres'][0])
+        elif(test['fonction'] == 'demande_echange'):
+            self.demande_echange(test['paramètres'][0], test['paramètres'][1], test['paramètres'][2], test['paramètres'][3])
+        elif (test['fonction'] == 'get_demandeRecu'):
+            self.get_demandeRecu(test['paramètres'][0])
+        elif (test['fonction'] == 'get_demandeEnvoye'):
+            self.get_demandeEnvoye(test['paramètres'][0])
         #for v in r :
          #   print(v)
 
