@@ -137,7 +137,8 @@ class PageMesDemandes(tk.Frame):
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3])
+            if(self.tableau.item(curItem)["values"][0] == "Pas encore répondu"):
+                msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3])
 
         #Tableau
 

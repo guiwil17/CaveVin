@@ -527,6 +527,37 @@ class ClientThread(threading.Thread):
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
+    def change_vin(self,  nom, annee, type, cave, commentaire, image, echangeable, quantite, id_vin, id_user ):
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        echange = False
+        if (echangeable == 'True'):
+            echange = True
+
+        cursor = mydb.cursor()
+        query = (
+            "Update vin SET Nom = %s, année = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantité= %s WHERE Id_Vin = %s;")
+        id = self.get_id_cave(id_user, cave)
+        print(id_vin)
+        try:
+            cursor.execute(query, (nom, annee, type, id, commentaire, image, echange, quantite, id_vin))
+            print("ici")
+            self.retour = {"status": 200, "valeurs": True}
+            print(self.retour)
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+
     def get_random_id(self):
         mydb = mysql.connector.connect(
             host="localhost",
@@ -581,6 +612,7 @@ class ClientThread(threading.Thread):
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
         mydb.close()
         cursor.close()
+
 
     def get_demandeEnvoye(self, id_user):
         mydb = mysql.connector.connect(
@@ -673,6 +705,8 @@ class ClientThread(threading.Thread):
             self.accept_echange(test['paramètres'][0])
         elif (test['fonction'] == "refuse_echange"):
             self.refuse_echange(test['paramètres'][0])
+        elif(test['fonction'] == "change_vin"):
+            self.change_vin(test['paramètres'][0], test['paramètres'][1], test['paramètres'][2], test['paramètres'][3], test['paramètres'][4], test['paramètres'][5], test['paramètres'][6], test['paramètres'][7], test['paramètres'][8], test['paramètres'][9])
 
         #for v in r :
          #   print(v)
