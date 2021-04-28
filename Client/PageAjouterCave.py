@@ -22,7 +22,7 @@ class PageAjouterCave(tk.Frame):
             r = r.decode("utf-8")
             data = json.loads(r)
             s.close()
-            controller.show_frame("PageAccueil", [id_user])
+            mise_a_jour()
 
         def get_Caves():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -115,12 +115,12 @@ class PageAjouterCave(tk.Frame):
 
         # Tableau
         self.tableau = Treeview(can, columns=('Cave', 'test'))
-        self.tableau.pack(padx=260, pady=400)
+        self.tableau.pack(padx=260, pady=480)
 
         vsb = Scrollbar(can, orient="vertical", command=self.tableau.yview)
         vsb.pack(side='right', fill='y')
         self.tableau.configure(yscrollcommand=vsb.set)
-        vsb.place(x=950, y=400, height=327)
+        vsb.place(x=950, y=480, height=325)
 
         self.tableau.column('Cave', width=700, anchor='center')
         self.tableau.column('test', width=0, stretch=tk.NO, anchor='center')
