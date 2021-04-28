@@ -24,6 +24,7 @@ class VisiterCaves(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
+            s.close()
 
             return data['valeurs']
 
@@ -41,13 +42,13 @@ class VisiterCaves(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
+            s.close()
 
             return data['valeurs']
 
         def filtrage():
 
             tab = []
-            print(self.filtreNom.get())
             if (self.filtreNom.get() != ""):
                 tab.append("Nom")
                 tab.append(self.filtreNom.get())
@@ -68,6 +69,7 @@ class VisiterCaves(tk.Frame):
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
+                s.close()
 
                 tab.append(data["valeurs"])
 
@@ -82,7 +84,7 @@ class VisiterCaves(tk.Frame):
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
-                print(data)
+                s.close()
                 self.data = data['valeurs']
 
             else:
@@ -163,9 +165,7 @@ class VisiterCaves(tk.Frame):
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            print(self.tableau.item(curItem)["values"][6])
             if(self.tableau.item(curItem)["values"][6]=="Oui"):
-                print("ici")
                 controller.show_frame("DemanderEchange", [int(id_user), int(id_user_visite), int(self.tableau.item(curItem)["values"][7])])
 
 

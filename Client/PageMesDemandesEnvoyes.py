@@ -28,6 +28,7 @@ class PageMesDemandesEnvoyes(tk.Frame):
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
+            s.close()
             data = json.loads(r)
             if (data["status"] == 200 and data["valeurs"]):
                 return data['valeurs']
@@ -105,14 +106,6 @@ class PageMesDemandesEnvoyes(tk.Frame):
                         self.tableau.insert('', 'end', values=("accepté",d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]), tags = ('accept',))
                     else:
                         self.tableau.insert('', 'end', values=("refusé",d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"]), tags = ('refuse',))
-
-
-        #for d in self.data:
-            #self.tableau.insert('', 'end', values=(
-            #d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        #for d in self.data:
-            #self.tableau.insert('', 'end', values=(
-            #{d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
 
 
 

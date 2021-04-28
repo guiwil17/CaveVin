@@ -60,6 +60,7 @@ class PageAjouterVin(tk.Frame):
 
         r = s.recv(9999999)
         r = r.decode("utf-8")
+        s.close()
         data = json.loads(r)
         if (data["status"] == 200 and data["valeurs"]):
             OptionList = data["valeurs"]
@@ -74,10 +75,6 @@ class PageAjouterVin(tk.Frame):
         entryCave.pack(side="top")
         entryCave.place(x=550, y=385)
 
-        def callback(*args):
-            print("The selected item is {}".format(variable.get()))
-
-        variable.trace("w", callback)
 
         can.create_text(458, 450, text="Quantité", font=("Montserrat", 18, "bold"), fill="white")
         entryQuantity = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
@@ -111,7 +108,6 @@ class PageAjouterVin(tk.Frame):
                                 entryQuantity.get(), id_user]}
 
             data = json.dumps(m)
-            print(data)
             # data = json.loads(my_string)
 
             s.sendall(bytes(data, encoding="utf-8"))
@@ -119,6 +115,7 @@ class PageAjouterVin(tk.Frame):
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
+            s.close()
             data = json.loads(r)
 
             if (data["status"] == 200 and data["valeurs"]):

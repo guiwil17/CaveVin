@@ -16,7 +16,6 @@ class PageAdmin(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         def recupUsers():
-            print("recupusers")
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
 
@@ -28,7 +27,7 @@ class PageAdmin(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
-            print(data)
+            s.close()
             return data['valeurs']
 
         self.data = recupUsers()
@@ -100,14 +99,15 @@ class PageAdmin(tk.Frame):
                 self.top.destroy()
 
             def supprimer(self, id_user):
-                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.s.connect(("93.7.175.167", 1111))
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
                 m = {"fonction": "delete_user", "paramètres": [id_user]}
                 data = json.dumps(m)
-                self.s.sendall(bytes(data, encoding="utf-8"))
-                r = self.s.recv(9999999)
+                s.sendall(bytes(data, encoding="utf-8"))
+                r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
+                s.close()
                 refresh()
                 self.top.destroy()
 

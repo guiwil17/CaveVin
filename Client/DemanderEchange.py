@@ -27,13 +27,13 @@ class DemanderEchange(tk.Frame):
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
+            s.close()
             data = json.loads(r)
 
             return data['valeurs']
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            print("appel")
             if(self.tableau.item(curItem)["values"][6]=="Oui"):
                 #requête envoi demande d'échange
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,9 +46,9 @@ class DemanderEchange(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
 
-                print(data['valeurs'])
                 controller.show_frame("PageAccueil", [id_user])
 
         data = recupVins()
@@ -76,7 +76,6 @@ class DemanderEchange(tk.Frame):
         def filtrage():
 
             tab = []
-            print(self.filtreNom.get())
             if (self.filtreNom.get() != ""):
                 tab.append("Nom")
                 tab.append(self.filtreNom.get())
@@ -96,6 +95,7 @@ class DemanderEchange(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
 
                 tab.append(data["valeurs"])
@@ -110,8 +110,8 @@ class DemanderEchange(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
-                print(data)
                 self.data = data['valeurs']
 
             else:
@@ -173,19 +173,6 @@ class DemanderEchange(tk.Frame):
 
         self.tableau['show'] = 'headings'
 
-       # for d in data:
-
-            #if(d["Image"] != None):
-            #    byte =  d["Image"].encode('utf-8')
-             #   print(byte)
-             #   #img = base64.decodebytes(byte)
-             #   image = tk.PhotoImage(data=byte)
-             #   tableau.insert('', 'end',  text="",image=image,  values=(
-             #  d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-           # else:
-           #     tableau.insert('', 'end', values=(
-            #        d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
-            #        d["Echangeable"]))
         for d in data:
             self.tableau.insert('', 'end', values=(
            d["Nom"], d["Type"], d["Année"],  d["label"], d["Notation"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))

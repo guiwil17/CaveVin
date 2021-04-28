@@ -14,21 +14,31 @@ class PageConnexion(tk.Frame):
         def connexion(event=None):
             entryUser = self.entryUser.get()
             password = self.entryPass.get()
-            password_hash = hashlib.sha256(password.encode()).hexdigest()
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("93.7.175.167", 1111))
+            param = []
+            if(entryUser == ""):
+                param.append("Pseudo")
+            if(password == ""):
+                param.append("Password")
+            if(len(param) != 0):
+                Mbox(param, "Invalide")
+            else:
+                password_hash = hashlib.sha256(password.encode()).hexdigest()
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
 
-            m = {"fonction": "login", "paramètres": [entryUser, password_hash]}
-            data = json.dumps(m)
+                m = {"fonction": "login", "paramètres": [entryUser, password_hash]}
+                data = json.dumps(m)
 
-            s.sendall(bytes(data, encoding="utf-8"))
-            print(s.gettimeout())
+                s.sendall(bytes(data, encoding="utf-8"))
 
-            r = s.recv(9999999)
-            r = r.decode("utf-8")
-            data = json.loads(r)
-            if(data["status"] == 200 and data["valeurs"]):
-                controller.show_frame("PageAccueil", [data["valeurs"]])
+                r = s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+                s.close()
+                if(data["status"] == 200 and data["valeurs"]):
+                    controller.show_frame("PageAccueil", [data["valeurs"]])
+                else:
+                    Mbox(param, "")
 
 
         tk.Frame.__init__(self, parent)
@@ -39,6 +49,49 @@ class PageConnexion(tk.Frame):
         titre = ("Time New Roman", 35, "bold")
         fonts = ("Time New Roman", 18, "bold")
         fonts2 = ("Time New Roman", 16)
+
+        class Mbox(object):
+
+            root = None
+
+            def __init__(self, param, type):
+                tki = tkinter
+                self.top = tki.Toplevel(Mbox.root)
+                self.top.geometry("400x250")
+                self.top.title("Erreur")
+
+                frm = tki.Frame(self.top, borderwidth=4, relief='ridge')
+                frm.pack(fill='both', expand=True)
+
+
+                if(type == "Invalide"):
+                    label = tki.Label(frm, text="Des erreurs ont été observées : ")
+                    label.place(x=80, y=10)
+
+                    label = tki.Label(frm, text="")
+                    label.place(x=100, y=100)
+
+                    for i in param:
+                        if (i == "Pseudo"):
+                            label = tki.Label(frm, text="Le pseudo est vide")
+                            label.place(x=80, y=30)
+                        else:
+                            label = tki.Label(frm, text="Le mot de passe ne doit pas être vide")
+                            label.place(x=80, y=50)
+
+                    b_modifier = tki.Button(frm, text='Ok')
+                    b_modifier['command'] = lambda: self.Ok()
+                    b_modifier.place(x=190, y=150)
+                else:
+                    label = tki.Label(frm, text="L'utilisateur n'existe pas ou le mot de passe est incorrect ")
+                    label.place(x=50, y=70)
+
+                    b_modifier = tki.Button(frm, text='Ok')
+                    b_modifier['command'] = lambda: self.Ok()
+                    b_modifier.place(x=190, y=150)
+
+            def Ok(self):
+                self.top.destroy()
 
         can.create_text(500, 100, text="Connexion", font=titre)
         can.create_text(300, 285, text="Pseudo", font=fonts)

@@ -21,7 +21,6 @@ class ModifierVin(tk.Frame):
         r = s.recv(9999999)
         r = r.decode("utf-8")
         data = json.loads(r)
-        print(data)
         s.close()
         s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s2.connect(("93.7.175.167", 1111))
@@ -89,11 +88,6 @@ class ModifierVin(tk.Frame):
         entryCave.pack(side="top")
         entryCave.place(x=550, y=385)
 
-        def callback(*args):
-            print("The selected item is {}".format(variable.get()))
-
-        variable.trace("w", callback)
-
         can.create_text(458, 450, text="Quantité", font=("Montserrat", 18, "bold"), fill="white")
         entryQuantity = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
         entryQuantity.place(x=550, y=435)
@@ -113,7 +107,6 @@ class ModifierVin(tk.Frame):
         entryCommentaire.place(x=550, y=535)
         entryCommentaire.insert("1.0", data["valeurs"][0]["Notation"])
         def modifier_vin():
-            print("appel")
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
 

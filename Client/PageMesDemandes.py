@@ -13,7 +13,7 @@ from io import StringIO
 
 
 class PageMesDemandes(tk.Frame):
-    def __init__(self, parent, controller,id_user):
+    def __init__(self, parent, controller, id_user):
 
         tk.Frame.__init__(self, parent)
 
@@ -28,6 +28,7 @@ class PageMesDemandes(tk.Frame):
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
+            s.close()
             data = json.loads(r)
             if (data["status"] == 200 and data["valeurs"]):
                 return data['valeurs']
@@ -72,7 +73,7 @@ class PageMesDemandes(tk.Frame):
 
             root = None
 
-            def __init__(self, id_echange, pseudo):
+            def __init__(self, id_echange, pseudo, id_user):
                 tki = tkinter
                 self.top = tki.Toplevel(Mbox.root)
                 self.top.title("Action")
@@ -96,7 +97,7 @@ class PageMesDemandes(tk.Frame):
                 b_cancel.place(x=250, y=50)
 
                 regarderCave = tki.Button(frm, text="Regarder la Cave de l'utilisateur")
-                regarderCave['command'] = lambda: self.visiterCave(id_user, pseudo)
+                regarderCave['command'] = lambda: self.visiterCave(pseudo, id_user)
                 regarderCave.place(x=105, y=120)
 
             def accepter(self, id_echange):
@@ -110,13 +111,26 @@ class PageMesDemandes(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
-                print(data)
                 mise_a_jour()
                 self.top.destroy()
 
-            def visiterCave(self, id_user, id_vin):
-                print("modifier")
+            def visiterCave(self, pseudo, id_user):
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
+
+                m = {"fonction": "get_id_user", "paramètres": [pseudo]}
+                data = json.dumps(m)
+
+                s.sendall(bytes(data, encoding="utf-8"))
+
+                r = s.recv(9999999)
+                r = r.decode("utf-8")
+                data = json.loads(r)
+                s.close()
+                if (data["status"] == 200 and data["valeurs"]):
+                    controller.show_frame("VisiterCaves", [id_user, int(data["valeurs"][0])])
                 self.top.destroy()
 
             def refuser(self, id_echange):
@@ -131,7 +145,7 @@ class PageMesDemandes(tk.Frame):
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
-                print(data)
+                s.close()
                 mise_a_jour()
                 self.top.destroy()
         
@@ -139,7 +153,7 @@ class PageMesDemandes(tk.Frame):
         def selectItem(a):
             curItem = self.tableau.focus()
             if(self.tableau.item(curItem)["values"][0] == "Pas encore répondu"):
-                msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3])
+                msg = Mbox(self.tableau.item(curItem)["values"][5], self.tableau.item(curItem)["values"][3], id_user)
 
         def mise_a_jour():
             self.data = recupDemandes()
@@ -201,13 +215,6 @@ class PageMesDemandes(tk.Frame):
                     self.tableau.insert('', 'end', values=(
                         "refusé", d["Nom_vin_moi"], d["Nom_vin_demandeur"], d["Pseudo"], d["Date_demande"], d["id"]), tags=('refuse',))
         self.tableau.bind('<Double-1>', selectItem)
-
-        #for d in self.data:
-            #self.tableau.insert('', 'end', values=(
-            #d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
-        #for d in self.data:
-            #self.tableau.insert('', 'end', values=(
-            #{d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], d["Echangeable"]))
 
 
 

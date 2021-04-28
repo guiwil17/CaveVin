@@ -26,6 +26,7 @@ class MesCaves(tk.Frame):
 
             r = s.recv(9999999)
             r = r.decode("utf-8")
+            s.close()
             data = json.loads(r)
 
             return data['valeurs']
@@ -65,7 +66,6 @@ class MesCaves(tk.Frame):
         def filtrage():
 
             tab = []
-            print(self.filtreNom.get())
             if(self.filtreNom.get() != ""):
                 tab.append("Nom")
                 tab.append(self.filtreNom.get())
@@ -85,6 +85,7 @@ class MesCaves(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
 
                 tab.append(data["valeurs"])
@@ -99,8 +100,8 @@ class MesCaves(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
-                print(data)
                 self.data = data['valeurs']
 
             else:
@@ -138,8 +139,7 @@ class MesCaves(tk.Frame):
         vsb = Scrollbar(can, orient="vertical", command=self.tableau.yview)
         vsb.pack(side='right', fill='y')
         self.tableau.configure(yscrollcommand=vsb.set)
-
-        vsb.place(x=1180, y=180, height=527)
+        vsb.place(x=1185, y=180, height=527)
 
 
         self.tableau.column('Nom', width=200, stretch=tk.NO, anchor='center')
@@ -151,8 +151,6 @@ class MesCaves(tk.Frame):
         self.tableau.column('Echangeable', width=200, stretch=tk.NO, anchor='center')
 
         self.tableau.heading('Nom', text='Nom')
-
-
         self.tableau.heading('Type', text='Type')
         self.tableau.heading('Année', text='Année')
         self.tableau.heading('Commentaire', text='Commentaire')
@@ -200,44 +198,48 @@ class MesCaves(tk.Frame):
 
             def decrem(self, id_user, id_vin, quantite):
                 if(self.quantite>0):
-                    self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    self.s.connect(("93.7.175.167", 1111))
+                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    s.connect(("93.7.175.167", 1111))
                     self.quantite=quantite-1
                     self.label_quantite["text"] = "Quantité : "+str(self.quantite)
                     m = {"fonction": "decrementer_quantite", "paramètres": [id_user, id_vin]}
                     data = json.dumps(m)
 
-                    self.s.sendall(bytes(data, encoding="utf-8"))
+                    s.sendall(bytes(data, encoding="utf-8"))
+                    s.recv(9999999)
+                    s.close()
+
 
 
                     refresh()
 
             def increm(self, id_user, id_vin, quantite):
-                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.s.connect(("93.7.175.167", 1111))
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
                 self.quantite = quantite + 1
                 self.label_quantite["text"] = "Quantité : " + str(self.quantite)
                 m = {"fonction": "incrementer_quantite", "paramètres": [id_user, id_vin]}
                 data = json.dumps(m)
 
-                self.s.sendall(bytes(data, encoding="utf-8"))
-
+                s.sendall(bytes(data, encoding="utf-8"))
+                s.recv(9999999)
+                s.close()
 
                 refresh()
 
             def modifier(self, id_user, id_vin):
-                print("modifier")
                 controller.show_frame("ModifierVin", [id_user, id_vin])
                 self.top.destroy()
 
             def supprimer(self, id_user, id_vin):
-                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.s.connect(("93.7.175.167", 1111))
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
                 m = {"fonction": "supprimer_vin", "paramètres": [id_user, id_vin]}
                 data = json.dumps(m)
-                self.s.sendall(bytes(data, encoding="utf-8"))
-                r = self.s.recv(9999999)
+                s.sendall(bytes(data, encoding="utf-8"))
+                r = s.recv(9999999)
                 r = r.decode("utf-8")
+                s.close()
                 data = json.loads(r)
                 refresh()
                 self.top.destroy()

@@ -10,6 +10,24 @@ import PageConnexion
 class PageInscription(tk.Frame):
 
     def __init__(self, parent, controller):
+        def get_Pseudos():
+
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("93.7.175.167", 1111))
+
+            m = {"fonction": "get_Pseudos",
+                 "paramètres": []}
+            data = json.dumps(m)
+
+            s.sendall(bytes(data, encoding="utf-8"))
+
+            r = s.recv(9999999)
+            r = r.decode("utf-8")
+            s.close()
+            data = json.loads(r)
+
+            return data["valeurs"]
+
         def inscription(event=None):
             entryName = self.entryName.get()
             entryFirstName = self.entryFirstName.get()
@@ -17,11 +35,20 @@ class PageInscription(tk.Frame):
             entryPhone = self.entryPhone.get()
             entryPass = self.entryPass.get()
             entryConfirmPass = self.entryConfirmPass.get()
-            if(entryLogin==""):
-                can.create_text(600, 200, text=" Erreur : \n Pseudo vide", font=fonts2,
-                                fill="#AC1E44")
-            elif(entryPass!=entryConfirmPass or entryPass==""):
-                can.create_text(650, 300, text=" Erreur : \n Mots de passes\n non identiques ou vide", font=fonts2, fill="#AC1E44")
+            param = []
+            data = get_Pseudos()
+            if(entryLogin=="" or entryLogin in data):
+                param.append("Pseudo")
+            if(entryPass!=entryConfirmPass or entryPass==""):
+                param.append("Password")
+            if(entryPhone == "" or len(entryPhone) != 10 or entryPhone.isdigit() != True):
+                param.append("Phone")
+            if(entryName == ""):
+                param.append("Name")
+            if (entryFirstName == ""):
+                param.append("Prenom")
+            if(len(param) != 0):
+                Mbox(param)
             else:
                 password_hash = hashlib.sha256(entryPass.encode()).hexdigest()
 
@@ -36,8 +63,52 @@ class PageInscription(tk.Frame):
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
+                s.close()
 
                 controller.show_frame("PageConnexion")
+
+
+        class Mbox(object):
+
+            root = None
+
+            def __init__(self,param):
+                tki = tkinter
+                self.top = tki.Toplevel(Mbox.root)
+                self.top.geometry("400x250")
+                self.top.title("Erreur")
+
+                frm = tki.Frame(self.top, borderwidth=4, relief='ridge')
+                frm.pack(fill='both', expand=True)
+
+                label = tki.Label(frm, text="Des erreurs ont été observées : ")
+                label.place(x=80, y=10)
+
+                label = tki.Label(frm, text="")
+                label.place(x=100, y=100)
+
+                for i in param:
+                    if (i == "Pseudo"):
+                        label = tki.Label(frm, text="Le pseudo est vide")
+                        label.place(x=80, y=30)
+                    elif (i == "Phone"):
+                        label = tki.Label(frm, text="Le téléphone doit avoir 10 chiffres uniquement")
+                        label.place(x=80, y=50)
+                    elif (i == "Name"):
+                        label = tki.Label(frm, text="Le Nom ne doit pas être vide")
+                        label.place(x=80, y=70)
+                    elif (i == "Prenom"):
+                        label = tki.Label(frm, text="Le Prénom ne doit pas être vide")
+                        label.place(x=80, y=90)
+                    else:
+                        label = tki.Label(frm, text="Le mot de passe et la confirmation doivent être identique")
+                        label.place(x=80, y=110)
+                b_modifier = tki.Button(frm, text='Ok')
+                b_modifier['command'] = lambda: self.Ok()
+                b_modifier.place(x=190, y=150)
+
+            def Ok(self):
+                self.top.destroy()
 
 
         tk.Frame.__init__(self, parent)

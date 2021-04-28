@@ -24,6 +24,7 @@ class VisiterCavesAdmin(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
+            s.close()
 
             return data['valeurs']
 
@@ -41,6 +42,7 @@ class VisiterCavesAdmin(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
+            s.close()
 
             return data['valeurs']
 
@@ -53,7 +55,7 @@ class VisiterCavesAdmin(tk.Frame):
         style = Style(can)
         style.configure('Treeview', rowheight=50)
 
-        self.imgHome = tk.PhotoImage(file="img/home.png")
+        self.imgHome = tk.PhotoImage(file="img/retour.png")
 
 
         buttonHome = tk.Button(can, image=self.imgHome, command=lambda: controller.show_frame("PageAccueil",[id_user]))
@@ -101,14 +103,16 @@ class VisiterCavesAdmin(tk.Frame):
             id_vin = self.tableau.item(curItem)["values"][8]
             MsgBox = tk.messagebox.askokcancel("Suppression de vin", "Confirmez-vous la suppression du vin ?")
             if MsgBox:
-                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.s.connect(("93.7.175.167", 1111))
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect(("93.7.175.167", 1111))
                 m = {"fonction": "supprimer_vin", "paramètres": [id_user, id_vin]}
                 data = json.dumps(m)
-                self.s.sendall(bytes(data, encoding="utf-8"))
-                r = self.s.recv(9999999)
+                s.sendall(bytes(data, encoding="utf-8"))
+                r = s.recv(9999999)
                 r = r.decode("utf-8")
                 data = json.loads(r)
+                s.close()
+
                 refresh()
 
         def refresh():

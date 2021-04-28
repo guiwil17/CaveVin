@@ -45,13 +45,13 @@ class PageRecherche(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
+            s.close()
             if(data["status"] == 200 and data["valeurs"]):
                 controller.show_frame("VisiterCaves", [id_user, int(data["valeurs"][0])])
             else:
                 can.create_text(600, 300, text="Pseudo inconnu", font=fonts, fill="white")
 
         def random():
-            print("rand")
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(("93.7.175.167", 1111))
 
@@ -63,8 +63,7 @@ class PageRecherche(tk.Frame):
             r = s.recv(9999999)
             r = r.decode("utf-8")
             data = json.loads(r)
-            print(data["valeurs"][0])
-
+            s.close()
             if(data["status"] == 200 and data["valeurs"][0]!=id_user):
                 controller.show_frame("VisiterCaves", [id_user, int(data["valeurs"][0])])
             else:

@@ -43,8 +43,6 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        print("Label")
-        print(label)
         query = ("SELECT Id_Cave FROM cave WHERE label = %s AND Id_Personne = %s")
         id = -1;
 
@@ -86,6 +84,57 @@ class ClientThread(threading.Thread):
             print("SQLSTATE", err.sqlstate)
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+    def get_Pseudos(self):
+
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("SELECT Pseudo FROM Personne")
+
+        try:
+            tab = []
+            cursor.execute(query)
+            for (Pseudo) in cursor :
+                tab.append(Pseudo[0])
+            self.retour = {"status": 200, "valeurs": tab}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
+    def supprimer_cave(self, user_id, label):
+
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database='mywine'
+        )
+
+        cursor = mydb.cursor()
+        query = ("DELETE FROM Cave WHERE Id_Personne = %s AND label = %s")
+
+        try:
+            tab = []
+            cursor.execute(query, (user_id, label))
+            self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
+        except mysql.connector.Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
+
 
     def create_cave(self, label, Id_Personne):
         mydb = mysql.connector.connect(
@@ -209,15 +258,12 @@ class ClientThread(threading.Thread):
 
         try:
             tab = []
-            print("ici")
             cursor.execute(query, (id_utilisateur, id_Vin))
             for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label) in cursor:
-                print("la")
                 tab.append(
                     {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
                      "Quantité": Quantité, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
-            print(self.retour)
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -240,9 +286,7 @@ class ClientThread(threading.Thread):
         if ("Id_Cave" in valeurs):
             index = valeurs.index("Id_Cave")
             valeurs[index] = "Vin.Id_Cave"
-            print(valeurs[index])
         if (len(valeurs) == 2):
-            print(valeurs)
             query = (
                         "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
                         valeurs[0] + " = %s;")
@@ -250,11 +294,9 @@ class ClientThread(threading.Thread):
 
                 cursor.execute(query, (id_utilisateur, valeurs[1]))
                 for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label,Id_Vin) in cursor:
-                    print("bnbbbbbbbbbbbbbbbbb")
                     tab.append(
                         {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
                          "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
-                print(tab)
                 self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -329,11 +371,8 @@ class ClientThread(threading.Thread):
             "SELECT Utilisateur.Id_Personne FROM Utilisateur JOIN Personne on Utilisateur.Id_Personne = Personne.Id_Personne WHERE Pseudo = %s;")
         try:
             cursor.execute(query, (pseudo,))
-            print("la")
             for (Id_Personne) in cursor:
-                print(Id_Personne)
                 self.retour = {"status": 200, "valeurs": Id_Personne}
-            print("ici")
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -603,12 +642,9 @@ class ClientThread(threading.Thread):
         query = (
             "Update vin SET Nom = %s, année = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantité= %s WHERE Id_Vin = %s;")
         id = self.get_id_cave(id_user, cave)
-        print(id_vin)
         try:
             cursor.execute(query, (nom, annee, type, id, commentaire, image, echange, quantite, id_vin))
-            print("ici")
             self.retour = {"status": 200, "valeurs": True}
-            print(self.retour)
             mydb.commit()
         except mysql.connector.Error as err:
             print(err)
@@ -617,30 +653,6 @@ class ClientThread(threading.Thread):
             print("Message", err.msg)
             self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
 
-    def get_random_id(self):
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database='mywine'
-        )
-
-        cursor = mydb.cursor()
-        query = (
-            "SELECT Utilisateur.Id_Personne, Pseudo FROM utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
-
-        try:
-            cursor.execute(query)
-            for (Id_Personne, Pseudo) in cursor:
-                self.retour = {"status": 200, "valeurs": [Id_Personne, Pseudo]}
-        except mysql.connector.Error as err:
-            print(err)
-            print("Error Code:", err.errno)
-            print("SQLSTATE", err.sqlstate)
-            print("Message", err.msg)
-            self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
-        mydb.close()
-        cursor.close()
 
     def get_demandeRecu(self, id_user):
         mydb = mysql.connector.connect(
@@ -649,7 +661,6 @@ class ClientThread(threading.Thread):
             password="",
             database='mywine'
         )
-        print("ici")
         cursor = mydb.cursor()
         query = (
             "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
@@ -659,12 +670,10 @@ class ClientThread(threading.Thread):
             cursor.execute(query, (id_user,))
             tab = []
             for (Id_Echange, accept, Pseudo, Nom, Nomv, Date_demande, reponse) in cursor:
-                print(Nom)
                 tab.append(
                     {"id": Id_Echange, "Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv,
                      "Nom_vin_demandeur": Nom, "Date_demande": Date_demande, "Reponse": reponse})
             self.retour = {"status": 200, "valeurs": tab}
-            print(self.retour)
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -695,7 +704,6 @@ class ClientThread(threading.Thread):
                     {"Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv, "Nom_vin_demandeur": Nom,
                      "Date_demande": Date_demande, "Reponse": reponse})
             self.retour = {"status": 200, "valeurs": tab}
-            print(self.retour)
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -720,7 +728,7 @@ class ClientThread(threading.Thread):
 
         test = json.loads(r)
 
-        print(test)
+        print(test['fonction'])
 
         if (test['fonction'] == "login"):
             self.login(test['paramètres'][0], test['paramètres'][1])
@@ -776,10 +784,14 @@ class ClientThread(threading.Thread):
             self.get_users()
         elif (test['fonction'] == "delete_user"):
             self.delete_user( test['paramètres'][0])
+        elif (test['fonction'] == "get_Pseudos"):
+            self.get_Pseudos()
+        elif (test['fonction'] == "get_caves"):
+            self.get_caves(test['paramètres'][0])
+        elif(test["fonction"] == "supprimer_cave"):
+            self.supprimer_cave(test['paramètres'][0], test['paramètres'][1])
 
-        # for v in r :
-        #   print(v)
-
+        print(self.retour)
         self.retour = json.dumps(self.retour)
         self.clientsocket.send(bytes(self.retour, encoding="utf-8"))
 
