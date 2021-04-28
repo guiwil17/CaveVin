@@ -63,28 +63,27 @@ class VisiterCavesAdmin(tk.Frame):
 
         titre = ("Time New Roman", 30, "bold")
 
-        txt_pseudo = can.create_text(560, 50,fill="white", font=titre,text="Caves de "+get_Pseudo())
+        txt_pseudo = can.create_text(640, 50,fill="white", font=titre,text="Caves de "+get_Pseudo())
 
 
         #Tableau
 
-        self.tableau = Treeview(can, columns=('','Nom', 'Type', 'Année', 'Cave', 'Commentaire', 'Quantité', 'Echangeable'))
-        self.tableau.pack(padx=10, pady=180)
+        self.tableau = Treeview(can, columns=('Nom', 'Type', 'Année', 'Cave', 'Commentaire', 'Quantité', 'Echangeable'))
+        self.tableau.pack(padx=70, pady=180)
 
         vsb = Scrollbar(can, orient="vertical", command=self.tableau.yview)
         vsb.pack(side='right', fill='y')
         self.tableau.configure(yscrollcommand=vsb.set)
 
-        vsb.place(x=1180, y=180, height=527)
+        vsb.place(x=1170, y=180, height=527)
 
-        self.tableau.column('',  width=100, stretch=tk.NO, anchor='center')
         self.tableau.column('Nom', width=200, stretch=tk.NO, anchor='center')
         self.tableau.column('Type', width=200, stretch=tk.NO, anchor='center')
         self.tableau.column('Année', width=100, stretch=tk.NO, anchor='center')
         self.tableau.column('Commentaire', width=300, stretch=tk.NO, anchor='center')
         self.tableau.column('Cave', width=120, stretch=tk.NO, anchor='center')
         self.tableau.column('Quantité', width=80, stretch=tk.NO, anchor='center')
-        self.tableau.column('Echangeable', width=70, stretch=tk.NO, anchor='center')
+        self.tableau.column('Echangeable', width=100, stretch=tk.NO, anchor='center')
 
         self.tableau.heading('Nom', text='Nom')
 
@@ -120,11 +119,11 @@ class VisiterCavesAdmin(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in data:
                 self.tableau.insert('', 'end', values=(
-                    d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
                 self.tableau.bind('<Double-1>', selectItem)
 
         for d in data:
             self.tableau.insert('', 'end', values=(
-            d["Image"], d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
+           d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
