@@ -61,27 +61,8 @@ class VisiterCavesAdmin(tk.Frame):
 
         titre = ("Time New Roman", 30, "bold")
 
-        button_filtre = tk.Button(can, text="Filtrer")
-        button_filtre.place(x=750, y=150)
-
         txt_pseudo = can.create_text(560, 50,fill="white", font=titre,text="Caves de "+get_Pseudo())
 
-        #Filtre
-        can.create_text(70, 160, text="Filtre", font=titre, fill="white")
-        filtreNom = tk.Entry(can, font=("Montserrat", 12, "bold"), width=13, bg="white", fg="black", justify="center")
-        filtreNom.place(x=140, y=150)
-
-        filtreType = tk.Entry(can, font=("Montserrat", 12, "bold"), width=15, bg="white", fg="black", justify="center")
-        filtreType.place(x=320, y=150)
-
-        filtreAnnee = tk.Entry(can, font=("Montserrat", 12, "bold"), width=7, bg="white", fg="black", justify="center")
-        filtreAnnee.place(x=520, y=150)
-
-        filtreCave = tk.Entry(can, font=("Montserrat", 12, "bold"),  width=9, bg="white", fg="black", justify="center")
-        filtreCave.place(x=620, y=150)
-
-        button_filtre = tk.Button(can, text="Filtrer")
-        button_filtre.place(x=750, y=150)
 
         #Tableau
 
