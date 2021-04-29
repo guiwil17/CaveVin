@@ -73,7 +73,7 @@ class MesCaves(tk.Frame):
                 tab.append("Type")
                 tab.append(self.filtreType.get())
             if (self.filtreAnnee.get() != ""):
-                tab.append("Année")
+                tab.append("Annee")
                 tab.append(self.filtreAnnee.get())
             if (self.filtreCave.get() != ""):
                 tab.append("Id_Cave")
