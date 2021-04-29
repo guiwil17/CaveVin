@@ -5,8 +5,7 @@ import threading
 import mysql.connector
 import mysql.connector
 import json
-import ast
-
+import mariadb
 
 class ClientThread(threading.Thread):
 
@@ -28,7 +27,7 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Id_Personne FROM personne WHERE Pseudo = %s AND Password = %s ")
+        query = ("SELECT Id_Personne FROM Personne WHERE Pseudo = %s AND Password = %s ")
         cursor.execute(query, (pseudo, password))
 
         for (Id_Personne) in cursor:
@@ -37,13 +36,13 @@ class ClientThread(threading.Thread):
     def get_id_cave(self, id_personne, label):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Id_Cave FROM cave WHERE label = %s AND Id_Personne = %s;")
+        query = ("SELECT Id_Cave FROM Cave WHERE label = %s AND Id_Personne = %s;")
         id = -1
 
         try:
@@ -66,9 +65,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -89,9 +88,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -115,9 +114,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -139,9 +138,9 @@ class ClientThread(threading.Thread):
     def create_cave(self, label, Id_Personne):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -163,9 +162,9 @@ class ClientThread(threading.Thread):
     def get_Pseudo(self, id_user):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -189,9 +188,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -217,9 +216,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -247,14 +246,14 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE cave.Id_Personne = %s AND vin.Id_Vin = %s;")
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE Cave.Id_Personne = %s AND Vin.Id_Vin = %s;")
 
         try:
             tab = []
@@ -276,9 +275,9 @@ class ClientThread(threading.Thread):
     def filtre(self, id_utilisateur, valeurs):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
         tab = []
 
@@ -288,7 +287,7 @@ class ClientThread(threading.Thread):
             valeurs[index] = "Vin.Id_Cave"
         if (len(valeurs) == 2):
             query = (
-                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE Id_Personne = %s AND " +
                         valeurs[0] + " = %s;")
             try:
 
@@ -306,7 +305,7 @@ class ClientThread(threading.Thread):
                 self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
         elif (len(valeurs) == 4):
             query = (
-                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE Id_Personne = %s AND " +
                         valeurs[0] + " = %s AND " + valeurs[2] + " = %s;")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3]))
@@ -361,9 +360,9 @@ class ClientThread(threading.Thread):
     def get_id_user(self, pseudo):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -383,14 +382,14 @@ class ClientThread(threading.Thread):
     def supprimer_vin(self, id_user, id_vin):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "DELETE vin FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "DELETE Vin FROM Vin JOIN Cave ON Cave.Id_Cave=vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin))
@@ -407,9 +406,9 @@ class ClientThread(threading.Thread):
     def get_users(self):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -435,9 +434,9 @@ class ClientThread(threading.Thread):
     def delete_user(self, id_user):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -460,14 +459,14 @@ class ClientThread(threading.Thread):
     def incrementer_quantite(self, id_user, id_vin):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantite = (SELECT quantite FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "UPDATE Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave SET Quantite = (SELECT Quantite FROM (SELECT * FROM Vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
@@ -484,14 +483,14 @@ class ClientThread(threading.Thread):
     def decrementer_quantite(self, id_user, id_vin):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantite = (SELECT quantite FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)-1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "UPDATE Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave SET Quantite = (SELECT Quantite FROM (SELECT * FROM Vin) AS v JOIN Cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)-1 WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
@@ -508,14 +507,14 @@ class ClientThread(threading.Thread):
     def get_random_id(self):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Utilisateur.Id_Personne, Pseudo FROM utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
+            "SELECT Utilisateur.Id_Personne, Pseudo FROM Utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
 
         try:
             cursor.execute(query)
@@ -533,9 +532,9 @@ class ClientThread(threading.Thread):
     def ajouter_vin(self, nom, annee, type, cave, commentaire, image, echangeable, quantite, user_id):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         echange = False
@@ -560,9 +559,9 @@ class ClientThread(threading.Thread):
     def demande_echange(self, id_user, id_user_visite, id_vin_demande, id_vin_propose):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -583,9 +582,9 @@ class ClientThread(threading.Thread):
     def accept_echange(self, id_echange):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -606,9 +605,9 @@ class ClientThread(threading.Thread):
     def refuse_echange(self, id_echange):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
@@ -629,9 +628,9 @@ class ClientThread(threading.Thread):
     def change_vin(self, nom, annee, type, cave, commentaire, image, echangeable, quantite, id_vin, id_user):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         echange = False
@@ -640,7 +639,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "Update vin SET Nom = %s, annee = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantite= %s WHERE Id_Vin = %s;")
+            "Update Vin SET Nom = %s, annee = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantite= %s WHERE Id_Vin = %s;")
         id = self.get_id_cave(id_user, cave)
         try:
             cursor.execute(query, (nom, annee, type, id, commentaire, image, echange, quantite, id_vin))
@@ -657,13 +656,13 @@ class ClientThread(threading.Thread):
     def get_demandeRecu(self, id_user):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
         cursor = mydb.cursor()
         query = (
-            "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
+            "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
             "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE id_Recepteur = %s")
 
         try:
@@ -686,14 +685,14 @@ class ClientThread(threading.Thread):
     def get_demandeEnvoye(self, id_user):
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
         query = (
-            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM echange  JOIN Personne on Personne.Id_Personne = echange.id_Recepteur "
+            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = echange.id_Recepteur "
             "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE Id_Emmetteur = %s")
 
         try:
