@@ -230,8 +230,8 @@ class ClientThread(threading.Thread):
             cursor.execute(query, (id_utilisateur,))
             for (Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label) in cursor:
                 tab.append(
-                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                     "Quantité": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
+                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                     "Quantite": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
         except mysql.connector.Error as err:
             print(err)
@@ -260,8 +260,8 @@ class ClientThread(threading.Thread):
             cursor.execute(query, (id_utilisateur, id_Vin))
             for (Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label) in cursor:
                 tab.append(
-                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                     "Quantité": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
+                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                     "Quantite": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
         except mysql.connector.Error as err:
             print(err)
@@ -294,8 +294,8 @@ class ClientThread(threading.Thread):
                 cursor.execute(query, (id_utilisateur, valeurs[1]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label,Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                         "Quantite": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                 self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -311,8 +311,8 @@ class ClientThread(threading.Thread):
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                         "Quantite": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -329,8 +329,8 @@ class ClientThread(threading.Thread):
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                         "Quantite": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -347,8 +347,8 @@ class ClientThread(threading.Thread):
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5], valeurs[7]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
-                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Annee": Annee,
+                         "Quantite": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -422,7 +422,7 @@ class ClientThread(threading.Thread):
             tab = []
             cursor.execute(query)
             for (Id_Personne, Nom, Prenom, Numero_telephone, Pseudo) in cursor:
-                tab.append({"Id": Id_Personne, "Nom": Nom, "Prénom":Prenom, "Num_tel": Numero_telephone, "Pseudo": Pseudo})
+                tab.append({"Id": Id_Personne, "Nom": Nom, "Prenom":Prenom, "Num_tel": Numero_telephone, "Pseudo": Pseudo})
             self.retour = {"status": 200, "valeurs": tab}
             mydb.commit()
         except mysql.connector.Error as err:
@@ -803,7 +803,7 @@ class ClientThread(threading.Thread):
         self.retour = json.dumps(self.retour)
         self.clientsocket.send(bytes(self.retour, encoding="utf-8"))
 
-        print("Client déconnecté...")
+        print("Client deconnecte...")
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -812,7 +812,7 @@ tcpsock.bind(("", 1111))
 
 while True:
     tcpsock.listen(10)
-    print("En écoute...")
+    print("En ecoute...")
     (clientsocket, (ip, port)) = tcpsock.accept()
     newthread = ClientThread(ip, port, clientsocket)
     newthread.start()

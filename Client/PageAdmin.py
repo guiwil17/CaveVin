@@ -119,11 +119,11 @@ class PageAdmin(tk.Frame):
             data = recupUsers()
             self.tableau.delete(*self.tableau.get_children())
             for d in data:
-                self.tableau.insert('', 'end', values=(d["Nom"], d["Prénom"], d["Num_tel"], d["Pseudo"], d["Id"]))
+                self.tableau.insert('', 'end', values=(d["Nom"], d["Prenom"], d["Num_tel"], d["Pseudo"], d["Id"]))
                 self.tableau.bind('<Double-1>', selectItem)
 
         for d in self.data:
-            self.tableau.insert('', 'end', values=(d["Nom"], d["Prénom"], d["Num_tel"], d["Pseudo"], d["Id"]))
+            self.tableau.insert('', 'end', values=(d["Nom"], d["Prenom"], d["Num_tel"], d["Pseudo"], d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
 
 

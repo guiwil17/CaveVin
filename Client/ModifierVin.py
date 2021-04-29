@@ -68,7 +68,7 @@ class ModifierVin(tk.Frame):
         can.create_text(472, 300, text="Année", font=("Montserrat", 18, "bold"), fill="white")
         entryAnnee = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
         entryAnnee.place(x=550, y=285)
-        entryAnnee.insert(0, data["valeurs"][0]["Année"])
+        entryAnnee.insert(0, data["valeurs"][0]["Annee"])
 
         can.create_text(478, 350, text="Type", font=("Montserrat", 18, "bold"), fill="white")
         entryType = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
@@ -91,7 +91,7 @@ class ModifierVin(tk.Frame):
         can.create_text(458, 450, text="Quantité", font=("Montserrat", 18, "bold"), fill="white")
         entryQuantity = tk.Entry(can, font=("Montserrat", 18, "bold"), bg="white", fg="black", justify="center")
         entryQuantity.place(x=550, y=435)
-        entryQuantity.insert(0, data["valeurs"][0]["Quantité"])
+        entryQuantity.insert(0, data["valeurs"][0]["Quantite"])
 
         can.create_text(435, 500, text="Échangeable", font=("Montserrat", 18, "bold"), fill="white")
         self.tradable = tk.BooleanVar()

@@ -85,12 +85,14 @@ class MesCaves(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                print(r)
                 s.close()
                 data = json.loads(r)
 
                 tab.append(data["valeurs"])
 
             if(len(tab) != 0):
+                print(tab)
                 m = {"fonction": "filtre", "paramètres": [id_user, tab]}
                 data = json.dumps(m)
 
@@ -100,6 +102,7 @@ class MesCaves(tk.Frame):
 
                 r = s.recv(9999999)
                 r = r.decode("utf-8")
+                print(r)
                 s.close()
                 data = json.loads(r)
                 self.data = data['valeurs']
@@ -109,7 +112,7 @@ class MesCaves(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in self.data:
                 self.tableau.insert('', 'end', values=(
-                    d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"],  d["Quantité"],
+                    d["Nom"], d["Type"], d["Annee"], d["label"], d["Notation"],  d["Quantite"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
         #Filtre
 
@@ -253,13 +256,13 @@ class MesCaves(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in data:
                 self.tableau.insert('', 'end', values=(
-                   d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Annee"], d["label"], d["Notation"], d["Quantite"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
            
         for d in self.data:
             self.tableau.insert('', 'end', values=(
-                   d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Annee"], d["label"], d["Notation"], d["Quantite"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
         self.tableau.bind('<Double-1>', selectItem)
 

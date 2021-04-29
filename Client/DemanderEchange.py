@@ -119,7 +119,7 @@ class DemanderEchange(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in self.data:
                 self.tableau.insert('', 'end', values=(
-                d["Nom"], d["Type"], d["Année"], d["label"], d["Notation"], d["Quantité"],
+                d["Nom"], d["Type"], d["Annee"], d["label"], d["Notation"], d["Quantite"],
                 ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
             self.tableau.bind('<Double-1>', selectItem)
        
@@ -175,7 +175,7 @@ class DemanderEchange(tk.Frame):
 
         for d in data:
             self.tableau.insert('', 'end', values=(
-           d["Nom"], d["Type"], d["Année"],  d["label"], d["Notation"], d["Quantité"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
+           d["Nom"], d["Type"], d["Annee"],  d["label"], d["Notation"], d["Quantite"], ("Oui" if d["Echangeable"]==1  else "Non"), d["Id"]))
         self.tableau.bind('<Double-1>', selectItem)
 
 
