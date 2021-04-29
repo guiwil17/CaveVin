@@ -253,7 +253,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE Cave.Id_Personne = %s AND Vin.Id_Vin = %s;")
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN Cave ON cave.Id_Cave=vin.Id_Cave WHERE Cave.Id_Personne = %s AND Vin.Id_Vin = %s;")
 
         try:
             tab = []
