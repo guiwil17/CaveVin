@@ -21,9 +21,9 @@ class ClientThread(threading.Thread):
 
         mydb = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="",
-            database='mywine'
+            user="mywine",
+            password="mywine",
+            database='MyWine'
         )
 
         cursor = mydb.cursor()
