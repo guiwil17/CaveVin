@@ -99,12 +99,12 @@ class VisiterCavesAdmin(tk.Frame):
 
         def selectItem(a):
             curItem = self.tableau.focus()
-            id_vin = self.tableau.item(curItem)["values"][8]
+            id_vin = self.tableau.item(curItem)["values"][7]
             MsgBox = tk.messagebox.askokcancel("Suppression de vin", "Confirmez-vous la suppression du vin ?")
             if MsgBox:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect(("93.7.175.167", 1111))
-                m = {"fonction": "supprimer_vin", "paramètres": [id_user, id_vin]}
+                m = {"fonction": "supprimer_vin", "paramètres": [id_user_visite, id_vin]}
                 data = json.dumps(m)
                 s.sendall(bytes(data, encoding="utf-8"))
                 r = s.recv(9999999)

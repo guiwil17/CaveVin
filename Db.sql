@@ -82,6 +82,12 @@ INSERT INTO Administrateur VALUES(1);
 CREATE TRIGGER `Ajout_user` AFTER INSERT ON `Personne`
  FOR EACH ROW INSERT INTO Cave Values(null, "Maison Principale", NEW.Id_Personne);
 
+CREATE TRIGGER `Suppresion_echange` AFTER DELETE ON `Personne`
+ FOR EACH ROW DELETE FROM Echange WHERE Id_Emmetteur = old.Id_Personne OR Id_Recepteur = old.Id_Personne;
+
+CREATE TRIGGER `Suppresion_echange_2` AFTER DELETE ON `Vin`
+ FOR EACH ROW DELETE FROM Echange WHERE Id_Vin_Recepteur = old.Id_Vin OR Id_Vin_Emmetteur = old.Id_Vin;
+
 CREATE TRIGGER `Ajout_utilisateur` AFTER INSERT ON `Personne`
  FOR EACH ROW INSERT INTO Utilisateur Values(NEW.Id_Personne);
 
