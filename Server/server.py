@@ -717,7 +717,7 @@ class ClientThread(threading.Thread):
         print("Connexion de %s %s" % (self.ip, self.port,))
         r = ""
         while 1:
-            message = self.clientsocket.recv(10000000000)
+            message = self.clientsocket.recv(1248)
             message = message.decode("utf-8")
 
             # test = json.loads(r)
