@@ -97,41 +97,5 @@ INSERT INTO Personne VALUES(null, "Olivier", "Flauzac", "0000000000", "c9d218a13
 INSERT INTO Utilisateur VALUES(1);
 INSERT INTO Utilisateur VALUES(2);
 
-INSERT INTO Cave Values(null, "Maison Secondaire", 1);
-INSERT INTO Cave Values(null, "Maison de vacances", 2);
-
-
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château Mouton Rothschild Pauillac', 'Bordeaux Rouge amer', 'très bon, assez amer', FALSE, 2002, 5, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château Lafite Rothschild Pauillac', 'Bordeaux Rouge sucre', 'bon vin de table', FALSE, 2012, 1, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château Margaux', 'Bordeaux Rouge amer', 'moyen, trop amer', FALSE, 2005, 12, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château Haut-Brion Pessac-Leognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchone', FALSE, 2005, 3, 2);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château Haut-Brion Pessac-Leognan', 'Bordeaux Rouge amer', 'bonne odeur mais bouchone', FALSE, 2005, 6, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Beausejour (Duffau Lagarosse), Saint Emilion', 'Bordeaux Rouge', '18/20', FALSE, 2002, 2, 3);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', '16/20', TRUE, 2012, 8, 3);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', 'bon vin', FALSE, 2020, 7, 5);
-
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Beaulon', 'Pineau des Charentes', 'Bon vin, 15/20', TRUE, 2016, 2, 5);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Domaine de la Renardiere', 'Arbois', 'Pas goûte', FALSE, 2018, 6, 5);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'winzenberg gewurztraminer', 'Alsace', '18/20', TRUE, 2017, 6, 7);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'winzenberg grains nobles muscat', 'Alsace', 'bon 15/20', FALSE, 2017, 3, 7);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'winzenberg grains nobles muscat', 'Alsace', 'moyen', FALSE, 2015, 6, 2);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'winzenberg grains nobles muscat', 'Alsace', 'bon vin', TRUE, 2017, 2, 5);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Bastor la Montagne, Sauternes', 'Bordeaux Blanc', 'bon vin', TRUE, 2012, 7, 2);
-
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Sauterne château yquem', 'Jurançon', 'Vin de qualite', TRUE, 2012, 4, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Dom perignon Moet & Chandon', 'Champagne', 'Flacon mythique, Dom Perignon est un champagne subtil et elegant', TRUE, 2004, 3, 6);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'SAINT EMILION GRAND CRU CHÂTEAU', 'Vin', 'Ce millesime se caracterise par son eclat, sa fraîcheur aromatique, sa precision, sa nettete.', TRUE, 2011, 3, 6);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Château lafite Rothscild', 'Vin', 'Au nez, on decouvre un bouquet intense de fruits noirs, avec quelques notes de reglisse et de grille.', TRUE, 2011, 10, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Heineken', 'Bière', 'Bière raffine digne des meilleures', TRUE, 2011, 42, 1);
-INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Dom perignon Moet & Chandon', 'Champagne', 'parfait 25/20', FALSE, 2017, 3, 6);
-
-
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,14,6,2,NOW(), FALSE);
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,9,6,2,NOW(), FALSE);
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 7,15,3,4,NOW(), FALSE);
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,7,4,2,NOW(), FALSE);
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,19,3,2,NOW(), FALSE);
-INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 19,11,2,3,NOW(), FALSE);
-
 
 
