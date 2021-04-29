@@ -288,7 +288,7 @@ class ClientThread(threading.Thread):
         if (len(valeurs) == 2):
             query = (
                         "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE Id_Personne = %s AND " +
-                        valeurs[0] + " = %s;")
+                        valeurs[0] + " LIKE CONCAT('%', %s, '%');")
             try:
 
                 cursor.execute(query, (id_utilisateur, valeurs[1]))
@@ -306,7 +306,7 @@ class ClientThread(threading.Thread):
         elif (len(valeurs) == 4):
             query = (
                         "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE Id_Personne = %s AND " +
-                        valeurs[0] + " = %s AND " + valeurs[2] + " = %s;")
+                        valeurs[0] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[2] + " LIKE CONCAT('%', %s, '%');")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
@@ -324,7 +324,7 @@ class ClientThread(threading.Thread):
         elif (len(valeurs) == 6):
             query = (
                         "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
-                        valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s;")
+                        valeurs[0] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[2] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[4] + " LIKE CONCAT('%', %s, '%');")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
@@ -341,8 +341,8 @@ class ClientThread(threading.Thread):
         else:
             query = (
                     "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
-                    valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s AND " + valeurs[
-                        6] + " = %s;")
+                    valeurs[0] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[2] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[4] + " LIKE CONCAT('%', %s, '%') AND " + valeurs[
+                        6] + " LIKE CONCAT('%', %s, '%');")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5], valeurs[7]))
                 for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
