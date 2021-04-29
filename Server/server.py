@@ -43,8 +43,8 @@ class ClientThread(threading.Thread):
         )
 
         cursor = mydb.cursor()
-        query = ("SELECT Id_Cave FROM cave WHERE label = %s AND Id_Personne = %s")
-        id = -1;
+        query = ("SELECT Id_Cave FROM cave WHERE label = %s AND Id_Personne = %s;")
+        id = -1
 
         try:
             cursor.execute(query, (label, id_personne))
@@ -224,15 +224,15 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s;")
 
         try:
             tab = []
             cursor.execute(query, (id_utilisateur,))
-            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label) in cursor:
+            for (Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label) in cursor:
                 tab.append(
-                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                     "Quantité": Quantité, "Image": "Image", "label": label, "Id": Id_Vin})
+                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                     "Quantité": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
         except mysql.connector.Error as err:
             print(err)
@@ -254,15 +254,15 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE cave.Id_Personne = %s AND vin.Id_Vin = %s;")
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM vin JOIN cave ON cave.Id_Cave=vin.Id_Cave WHERE cave.Id_Personne = %s AND vin.Id_Vin = %s;")
 
         try:
             tab = []
             cursor.execute(query, (id_utilisateur, id_Vin))
-            for (Id_Vin, Nom, Type, Notation, Echangeable, Année, Quantité, label) in cursor:
+            for (Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label) in cursor:
                 tab.append(
-                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                     "Quantité": Quantité, "Image": "Image", "label": label, "Id": Id_Vin})
+                    {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                     "Quantité": Quantite, "Image": "Image", "label": label, "Id": Id_Vin})
             self.retour = {"status": 200, "valeurs": tab}
         except mysql.connector.Error as err:
             print(err)
@@ -288,15 +288,15 @@ class ClientThread(threading.Thread):
             valeurs[index] = "Vin.Id_Cave"
         if (len(valeurs) == 2):
             query = (
-                        "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
                         valeurs[0] + " = %s;")
             try:
 
                 cursor.execute(query, (id_utilisateur, valeurs[1]))
-                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label,Id_Vin) in cursor:
+                for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label,Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                         "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                 self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -306,14 +306,14 @@ class ClientThread(threading.Thread):
                 self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
         elif (len(valeurs) == 4):
             query = (
-                        "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
                         valeurs[0] + " = %s AND " + valeurs[2] + " = %s;")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3]))
-                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin) in cursor:
+                for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                         "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -324,14 +324,14 @@ class ClientThread(threading.Thread):
 
         elif (len(valeurs) == 6):
             query = (
-                        "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                        "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
                         valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s;")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5]))
-                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin) in cursor:
+                for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                         "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -341,15 +341,15 @@ class ClientThread(threading.Thread):
                 self.retour = {"status": 500, "valeurs": "erreur : " + err.msg}
         else:
             query = (
-                    "SELECT Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
+                    "SELECT Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin FROM Vin JOIN Cave on Cave.id_Cave = Vin.id_Cave WHERE id_Personne = %s AND " +
                     valeurs[0] + " = %s AND " + valeurs[2] + " = %s AND " + valeurs[4] + " = %s AND " + valeurs[
                         6] + " = %s;")
             try:
                 cursor.execute(query, (id_utilisateur, valeurs[1], valeurs[3], valeurs[5], valeurs[7]))
-                for (Nom, Type, Notation, Echangeable, Année, Quantité, Image, label, Id_Vin) in cursor:
+                for (Nom, Type, Notation, Echangeable, Annee, Quantite, Image, label, Id_Vin) in cursor:
                     tab.append(
-                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Année,
-                         "Quantité": Quantité, "Image": Image, "label": label, "Id": Id_Vin})
+                        {"Nom": Nom, "Type": Type, "Notation": Notation, "Echangeable": Echangeable, "Année": Annee,
+                         "Quantité": Quantite, "Image": Image, "label": label, "Id": Id_Vin})
                     self.retour = {"status": 200, "valeurs": tab}
             except mysql.connector.Error as err:
                 print(err)
@@ -414,13 +414,13 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Utilisateur.Id_Personne, Personne.Nom, Personne.Prénom, Personne.Numéro_téléphone, Personne.Pseudo FROM Utilisateur JOIN Personne on Personne.Id_Personne = Utilisateur.Id_Personne;")
+            "SELECT Utilisateur.Id_Personne, Personne.Nom, Personne.Prenom, Personne.Numero_telephone, Personne.Pseudo FROM Utilisateur JOIN Personne on Personne.Id_Personne = Utilisateur.Id_Personne;")
 
         try:
             tab = []
             cursor.execute(query)
-            for (Id_Personne, Nom, Prénom, Numéro_téléphone, Pseudo) in cursor:
-                tab.append({"Id": Id_Personne, "Nom": Nom, "Prénom":Prénom, "Num_tel": Numéro_téléphone, "Pseudo": Pseudo})
+            for (Id_Personne, Nom, Prenom, Numero_telephone, Pseudo) in cursor:
+                tab.append({"Id": Id_Personne, "Nom": Nom, "Prénom":Prenom, "Num_tel": Numero_telephone, "Pseudo": Pseudo})
             self.retour = {"status": 200, "valeurs": tab}
             mydb.commit()
         except mysql.connector.Error as err:
@@ -467,7 +467,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantité = (SELECT quantité FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantite = (SELECT quantite FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
@@ -491,7 +491,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantité = (SELECT quantité FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)-1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "UPDATE vin JOIN cave ON cave.Id_Cave=vin.Id_Cave SET quantite = (SELECT quantite FROM (SELECT * FROM vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)-1 WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
@@ -543,7 +543,7 @@ class ClientThread(threading.Thread):
             echange = True
         cursor = mydb.cursor()
         query = (
-            "INSERT INTO Vin (Id_Vin,Nom,Type,Notation,Echangeable,Année,Quantité,Id_Cave, Image) VALUES(null, %s, %s, %s, %s, %s, %s, %s, %s)")
+            "INSERT INTO Vin (Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave, Image) VALUES(null, %s, %s, %s, %s, %s, %s, %s, %s)")
 
         id = self.get_id_cave(user_id, cave)
         try:
@@ -640,7 +640,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "Update vin SET Nom = %s, année = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantité= %s WHERE Id_Vin = %s;")
+            "Update vin SET Nom = %s, annee = %s, type= %s, Id_Cave= %s, Notation= %s, image= %s, echangeable= %s, quantite= %s WHERE Id_Vin = %s;")
         id = self.get_id_cave(id_user, cave)
         try:
             cursor.execute(query, (nom, annee, type, id, commentaire, image, echange, quantite, id_vin))

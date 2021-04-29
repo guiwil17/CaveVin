@@ -156,7 +156,7 @@ class MesCaves(tk.Frame):
         self.tableau.heading('Commentaire', text='Commentaire')
         self.tableau.heading('Cave', text='Cave')
         self.tableau.heading('Quantité', text='Quantité')
-        self.tableau.heading('Echangeable', text='')
+        self.tableau.heading('Echangeable', text='Echangeable')
 
         self.tableau['show'] = 'headings'
 
