@@ -392,6 +392,8 @@ class ClientThread(threading.Thread):
             "DELETE Vin FROM Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
+            print(id_user)
+            print(id_vin)
             cursor.execute(query, (id_user, id_vin))
             self.retour = {"status": 200, "valeurs": True}
             mydb.commit()
@@ -447,6 +449,7 @@ class ClientThread(threading.Thread):
         try:
             cursor.execute(query, (id_user,))
             self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -519,7 +522,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Utilisateur.Id_Personne, Pseudo FROM Utilisateur  JOIN Personne on Personne.Id_Personne = utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
+            "SELECT Utilisateur.Id_Personne, Pseudo FROM Utilisateur  JOIN Personne on Personne.Id_Personne = Utilisateur.Id_Personne ORDER BY RAND() LIMIT 1")
 
         try:
             cursor.execute(query)
@@ -678,6 +681,7 @@ class ClientThread(threading.Thread):
                     {"id": Id_Echange, "Echange": accept, "Pseudo": Pseudo, "Nom_vin_moi": Nomv,
                      "Nom_vin_demandeur": Nom, "Date_demande": Date_demande, "Reponse": reponse})
             self.retour = {"status": 200, "valeurs": tab}
+            mydb.commit()
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
