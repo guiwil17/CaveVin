@@ -253,7 +253,7 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN Cave ON cave.Id_Cave=vin.Id_Cave WHERE Cave.Id_Personne = %s AND Vin.Id_Vin = %s;")
+            "SELECT Vin.Id_Vin, Nom, Type, Notation, Echangeable, Annee, Quantite, label FROM Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave WHERE Cave.Id_Personne = %s AND Vin.Id_Vin = %s;")
 
         try:
             tab = []
@@ -389,11 +389,12 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "DELETE Vin FROM Vin JOIN Cave ON Cave.Id_Cave=vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "DELETE Vin FROM Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
             cursor.execute(query, (id_user, id_vin))
             self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -466,11 +467,14 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "UPDATE Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave SET Quantite = (SELECT Quantite FROM (SELECT * FROM Vin) AS v JOIN cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
+            "UPDATE Vin JOIN Cave ON Cave.Id_Cave=Vin.Id_Cave SET Quantite = (SELECT Quantite FROM (SELECT * FROM Vin) AS v JOIN Cave c ON c.Id_Cave=v.Id_Cave WHERE c.Id_Personne = %s AND v.Id_Vin = %s)+1 WHERE Id_Personne = %s AND Id_Vin = %s;")
 
         try:
+            print(id_user)
+            print(id_vin)
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
             self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -495,6 +499,7 @@ class ClientThread(threading.Thread):
         try:
             cursor.execute(query, (id_user, id_vin, id_user, id_vin))
             self.retour = {"status": 200, "valeurs": True}
+            mydb.commit()
         except mysql.connector.Error as err:
             print(err)
             print("Error Code:", err.errno)
@@ -662,8 +667,8 @@ class ClientThread(threading.Thread):
         )
         cursor = mydb.cursor()
         query = (
-            "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = echange.Id_Emmetteur "
-            "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE id_Recepteur = %s")
+            "SELECT Id_Echange, accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = Echange.Id_Emmetteur "
+            "JOIN Vin vv on vv.Id_Vin = Echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = Echange.Id_Vin_Recepteur WHERE id_Recepteur = %s")
 
         try:
             cursor.execute(query, (id_user,))
@@ -692,8 +697,8 @@ class ClientThread(threading.Thread):
 
         cursor = mydb.cursor()
         query = (
-            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = echange.id_Recepteur "
-            "JOIN Vin vv on vv.Id_Vin = echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = echange.Id_Vin_Recepteur WHERE Id_Emmetteur = %s")
+            "SELECT accept, Personne.Pseudo, vv.Nom, v.Nom, DATE_FORMAT(Date_demande, '%d/%m/%Y'), reponse FROM Echange  JOIN Personne on Personne.Id_Personne = Echange.id_Recepteur "
+            "JOIN Vin vv on vv.Id_Vin = Echange.Id_Vin_Emmetteur  JOIN Vin v on v.Id_Vin = Echange.Id_Vin_Recepteur WHERE Id_Emmetteur = %s")
 
         try:
             cursor.execute(query, (id_user,))
