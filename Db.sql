@@ -18,15 +18,19 @@ CREATE TABLE Personne(
 CREATE TABLE Administrateur(
    Id_Personne INT,
    PRIMARY KEY(Id_Personne),
-   CONSTRAINT FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+   CONSTRAINT `FK_Admin_Personne`
+        FOREIGN KEY (Id_Personne) REFERENCES Personne(Id_Personne)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE Utilisateur(
    Id_Personne INT,
    PRIMARY KEY(Id_Personne),
-   CONSTRAINT FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne) ON DELETE CASCADE ON UPDATE CASCADE
+   CONSTRAINT `FK_User_Personne`
+        FOREIGN KEY(Id_Personne) REFERENCES Personne(Id_Personne)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE Cave(
@@ -34,7 +38,10 @@ CREATE TABLE Cave(
    label VARCHAR(50),
    Id_Personne INT NOT NULL,
    PRIMARY KEY(Id_Cave),
-   CONSTRAINT FOREIGN KEY(Id_Personne) REFERENCES Utilisateur(Id_Personne) ON DELETE CASCADE ON UPDATE CASCADE
+   CONSTRAINT `FK_Cave_Personne_`
+        FOREIGN KEY(Id_Personne) REFERENCES Utilisateur(Id_Personne)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE Vin(
