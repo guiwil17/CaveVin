@@ -68,7 +68,6 @@ CREATE TABLE Echange(
    CONSTRAINT FOREIGN KEY(Id_Recepteur) REFERENCES Utilisateur(Id_Personne) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-START TRANSACTION;
 
 INSERT INTO Personne VALUES(null, "Admin", "Admin", "0000000000", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 'admin');
 
@@ -125,6 +124,5 @@ INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_E
 INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,19,3,2,NOW(), FALSE);
 INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 19,11,2,3,NOW(), FALSE);
 
-COMMIT;
 
 
