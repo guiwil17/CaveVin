@@ -119,7 +119,7 @@ class VisiterCavesAdmin(tk.Frame):
             self.tableau.delete(*self.tableau.get_children())
             for d in data:
                 self.tableau.insert('', 'end', values=(
-                   d["Nom"], d["Type"], d["Année"], d["Notation"], d["label"], d["Quantité"],
+                   d["Nom"], d["Type"], d["Annee"], d["Notation"], d["label"], d["Quantite"],
                     ("Oui" if d["Echangeable"] == 1 else "Non"), d["Id"]))
                 self.tableau.bind('<Double-1>', selectItem)
 
