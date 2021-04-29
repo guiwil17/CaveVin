@@ -73,10 +73,10 @@ INSERT INTO Personne VALUES(null, "Admin", "Admin", "0000000000", "8c6976e5b5410
 
 INSERT INTO Administrateur VALUES(1);
 
-CREATE TRIGGER `Ajout_user` AFTER INSERT ON `personne`
+CREATE TRIGGER `Ajout_user` AFTER INSERT ON `Personne`
  FOR EACH ROW INSERT INTO Cave Values(null, "Maison Principale", NEW.Id_Personne);
 
-CREATE TRIGGER `Ajout_utilisateur` AFTER INSERT ON `personne`
+CREATE TRIGGER `Ajout_utilisateur` AFTER INSERT ON `Personne`
  FOR EACH ROW INSERT INTO Utilisateur Values(NEW.Id_Personne);
 
 INSERT INTO Personne VALUES(null, "Guillaume", "SOL", "0611223344", "274c8009224625d893a48ad78481d1130dc31b32c8500b335bfcf73168f6fa54", "guillaume");
@@ -116,12 +116,12 @@ INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VA
 INSERT INTO Vin(Id_Vin,Nom,Type,Notation,Echangeable,Annee,Quantite,Id_Cave)  VALUES(null, 'Dom perignon Moet & Chandon', 'Champagne', 'parfait 25/20', FALSE, 2017, 3, 6);
 
 
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,14,6,2,NOW(), FALSE);
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,9,6,2,NOW(), FALSE);
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 7,15,3,4,NOW(), FALSE);
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,7,4,2,NOW(), FALSE);
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,19,3,2,NOW(), FALSE);
-INSERT INTO echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 19,11,2,3,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,14,6,2,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,9,6,2,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 7,15,3,4,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,7,4,2,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 11,19,3,2,NOW(), FALSE);
+INSERT INTO Echange(Id_Echange, accept, Id_Vin_Recepteur, Id_Vin_Emmetteur, Id_Emmetteur, Id_Recepteur, Date_demande, reponse) VALUES (null,False, 19,11,2,3,NOW(), FALSE);
 
 COMMIT;
 
