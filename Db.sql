@@ -94,9 +94,6 @@ INSERT INTO Personne VALUES(null, "Jean", "REGISTRE", "0612142523", "56ec4fee9f2
 INSERT INTO Personne VALUES(null, "Guy", "TAR", "0612142523", "55fb96bf33f19ca574d9616fd4bdeb4ed4840a2120aa63824e436bb35ca3176f", "Guy");
 INSERT INTO Personne VALUES(null, "Olivier", "Flauzac", "0000000000", "c9d218a13c03291e89f9e8852e28025eec28f944af4d321c2bf98d29fee92328", "flauzac");
 
-INSERT INTO Utilisateur VALUES(1);
-INSERT INTO Utilisateur VALUES(2);
-
 INSERT INTO Cave Values(null, "Maison Secondaire", 1);
 INSERT INTO Cave Values(null, "Maison de vacances", 2);
 
